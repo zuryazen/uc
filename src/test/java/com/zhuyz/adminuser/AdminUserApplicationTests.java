@@ -1,8 +1,8 @@
-package com.zhuyz.admin_user;
+package com.zhuyz.adminuser;
 
-import com.zhuyz.admin_user.entity.User;
-import com.zhuyz.admin_user.mapper.UserMapper;
-import com.zhuyz.admin_user.service.UserService;
+import com.zhuyz.adminuser.entity.User;
+import com.zhuyz.adminuser.mapper.UserMapper;
+import com.zhuyz.adminuser.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,11 @@ public class AdminUserApplicationTests {
         System.out.println(userMapper.countAllUser());
 
     }
+    @Test
+    public void testFind() {
+        System.out.println(userService.findUserById(22));
 
+    }
 
     @Test
     public void testUpdate() {
@@ -41,7 +45,20 @@ public class AdminUserApplicationTests {
         user.setPassword("1231232132132");
         user.setAddress("US");
         user.setEmail("sdfdsfds@qq.com");
-        System.out.println(userService.updateUesrById(user));
+        System.out.println(userService.updateUserById(user));
 
     }
+
+    @Test
+    public void testFindService() {
+        System.out.println(userService.findUserById(22));
+
+    }
+
+    @Test
+    public void testSwitch() {
+        System.out.println(userService.updateUserSwitchById(22, false));
+
+    }
+
 }

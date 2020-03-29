@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuyz.admin_user.mapper.UserMapper">
+<mapper namespace="com.zhuyz.adminuser.mapper.UserMapper">
 
-    <resultMap id="UserMap" type="com.zhuyz.admin_user.entity.User">
+    <resultMap id="UserMap" type="com.zhuyz.adminuser.entity.User">
         <result column="id" jdbcType="INTEGER" property="id" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="isSwitch" jdbcType="TINYINT" property="isSwitch" />
     </resultMap>
 
-    <select id="findAllUser" resultType="com.zhuyz.admin_user.entity.User">
+    <select id="findAllUser" resultType="com.zhuyz.adminuser.entity.User">
         select id, name, address, email, isSwitch from user
     </select>
 
-    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.zhuyz.admin_user.entity.User">
+    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.zhuyz.adminuser.entity.User">
         select * from user where id = #{id}
     </select>
 
@@ -26,7 +27,7 @@
         delete from user where id = #{id}
     </delete>
 
-    <update id="updateUesrById" parameterType="com.zhuyz.admin_user.entity.User">
+    <update id="updateUserById" parameterType="com.zhuyz.adminuser.entity.User">
         update user
         <set>
             <if test="name != null">name = #{name},</if>
@@ -36,6 +37,15 @@
         </set>
         where
             id = #{id}
+    </update>
+
+    <update id="updateUserSwitchById">
+        update user
+        <set>
+            <if test="isSwitch != null">isSwitch = #{isSwitch}</if>
+        </set>
+        where
+        id = #{id}
     </update>
 
 </mapper>

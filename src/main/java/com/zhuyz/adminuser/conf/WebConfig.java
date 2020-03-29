@@ -1,4 +1,4 @@
-package com.zhuyz.admin_user.conf;
+package com.zhuyz.adminuser.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

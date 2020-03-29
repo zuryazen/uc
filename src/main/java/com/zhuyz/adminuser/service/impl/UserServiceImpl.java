@@ -1,15 +1,14 @@
-package com.zhuyz.admin_user.service.impl;
+package com.zhuyz.adminuser.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zhuyz.admin_user.entity.User;
-import com.zhuyz.admin_user.mapper.UserMapper;
-import com.zhuyz.admin_user.service.UserService;
+import com.zhuyz.adminuser.entity.User;
+import com.zhuyz.adminuser.mapper.UserMapper;
+import com.zhuyz.adminuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,8 +48,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer updateUesrById(User user) {
-        return userMapper.updateUesrById(user);
+    public Integer updateUserById(User user) {
+        return userMapper.updateUserById(user);
+    }
+
+    @Override
+    public Integer updateUserSwitchById(Integer id ,boolean isSwitch) {
+        return userMapper.updateUserSwitchById(id, isSwitch);
     }
 
 

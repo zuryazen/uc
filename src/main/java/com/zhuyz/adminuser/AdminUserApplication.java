@@ -1,11 +1,11 @@
-package com.zhuyz.admin_user;
+package com.zhuyz.adminuser;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.zhuyz.admin_user.mapper")
+@MapperScan("com.zhuyz.adminuser.mapper")
 public class AdminUserApplication {
 
     public static void main(String[] args) {

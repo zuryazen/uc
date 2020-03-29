@@ -1,7 +1,7 @@
-package com.zhuyz.admin_user.service;
+package com.zhuyz.adminuser.service;
 
 import com.github.pagehelper.PageInfo;
-import com.zhuyz.admin_user.entity.User;
+import com.zhuyz.adminuser.entity.User;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ public interface UserService {
 
     Integer deleteUserById(Integer id);
 
-    Integer updateUesrById(User user);
+    Integer updateUserById(User user);
 
+    Integer updateUserSwitchById(Integer id ,boolean isSwitch);
 }

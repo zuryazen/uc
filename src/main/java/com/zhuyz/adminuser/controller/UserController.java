@@ -1,9 +1,9 @@
-package com.zhuyz.admin_user.controller;
+package com.zhuyz.adminuser.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zhuyz.admin_user.entity.ResponseEntity;
-import com.zhuyz.admin_user.entity.User;
-import com.zhuyz.admin_user.service.UserService;
+import com.zhuyz.adminuser.entity.ResponseEntity;
+import com.zhuyz.adminuser.entity.User;
+import com.zhuyz.adminuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,27 +53,44 @@ public class UserController {
             responseEntity.setMsg("delete ok");
             responseEntity.setData(pageTotal);
         } else {
-            responseEntity.setCode(601); //code: 601删除失败
+            responseEntity.setCode(601); //code: 删除用户失败
             responseEntity.setMsg("delete error");
             responseEntity.setData(null);
         }
         return responseEntity;
     }
 
-    // 根据用户id更新用户
+    // 根据用户id更新是否启用开关
     @PutMapping("/update")
     public ResponseEntity<User> updateUserById(@RequestBody User user) {
         ResponseEntity<User> responseEntity = new ResponseEntity<>();
-        Integer state = userService.updateUesrById(user);
+        Integer state = userService.updateUserById(user);
         User userById = userService.findUserById(user.getId());
         if (state == 1) {
             responseEntity.setCode(200);
             responseEntity.setMsg("update ok");
         } else {
-            responseEntity.setCode(602); // 更新失败
+            responseEntity.setCode(602); // 更新用户失败
             responseEntity.setMsg("update error");
         }
         responseEntity.setData(userById);
+        return responseEntity;
+    }
+
+
+    // 根据用户id更新用户
+    @PutMapping("/updateSwitch/{id}/{isSwitch}")
+    public ResponseEntity<Integer> updateUserSwitchById(@PathVariable("id") Integer id, @PathVariable("isSwitch") boolean isSwitch) {
+        ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
+        Integer state = userService.updateUserSwitchById(id, isSwitch);
+        if (state == 1) {
+            responseEntity.setCode(200);
+            responseEntity.setMsg("update switch ok");
+        } else {
+            responseEntity.setCode(603); // 更新switch失败
+            responseEntity.setMsg("update switch error");
+        }
+        responseEntity.setData(state);
         return responseEntity;
     }
 

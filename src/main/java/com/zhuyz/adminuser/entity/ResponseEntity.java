@@ -1,6 +1,10 @@
-package com.zhuyz.admin_user.entity;
+package com.zhuyz.adminuser.entity;
 
-public class ResponseEntity<T>{
+import java.io.Serializable;
+
+public class ResponseEntity<T> {
+
+
 
     private int code;
     private String msg;

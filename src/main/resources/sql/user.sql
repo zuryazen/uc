@@ -10,4 +10,4 @@ commit
 
 
 -- 2020/03/29 增加字段 isSwitch 用于是否启用当前用户
-alter table user modify isSwitch int default 1 not null;
+alter table user modify isSwitch boolean default 1 not null;

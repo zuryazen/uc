@@ -5,18 +5,22 @@ server:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.zhuyz.admin_user.entity
+  type-aliases-package: com.zhuyz.adminuser.entity
+  configuration:
+    map-underscore-to-camel-case: true
 
 #showSql
 logging:
   level:
     com:
-      example:
-        mapper : debug
+      zhuyz:
+        adminuser:
+          mapper : debug
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+    # &tinyInt1isBit=false  设置mysql的tinyInt1isBit ---  boolean
     url: jdbc:mysql://localhost:3306/admin_user?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai

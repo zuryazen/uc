@@ -1,4 +1,6 @@
-package com.zhuyz.admin_user.entity;
+package com.zhuyz.adminuser.entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
@@ -7,14 +9,13 @@ public class User {
     private String password;
     private String address;
     private String email;
-    // 是否启用  0:否   1:是
-    private int isSwitch;
+    // 是否启用
+    private boolean isSwitch;
 
     public User() {
     }
 
-
-    public User(int id, String name, String password, String address, String email, int isSwitch) {
+    public User(int id, String name, String password, String address, String email, boolean isSwitch) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -27,12 +28,12 @@ public class User {
         return id;
     }
 
-    public int getIsSwitch() {
-        return isSwitch;
+    public boolean getIsSwitch() {
+        return this.isSwitch;
     }
 
-    public void setIsSwitch(int isSwitch) {
-        this.isSwitch = isSwitch;
+    public void setIsSwitch(boolean aSwitch) {
+        this.isSwitch = aSwitch;
     }
 
     public void setId(int id) {
@@ -79,6 +80,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
+                ", isSwitch=" + isSwitch +
                 '}';
     }
 }
