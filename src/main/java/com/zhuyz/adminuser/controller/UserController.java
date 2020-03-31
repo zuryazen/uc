@@ -1,6 +1,7 @@
 package com.zhuyz.adminuser.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zhuyz.adminuser.common.constant.Constant;
 import com.zhuyz.adminuser.entity.ResponseEntity;
 import com.zhuyz.adminuser.entity.User;
 import com.zhuyz.adminuser.service.UserService;
@@ -20,7 +21,7 @@ public class UserController {
                                                 @PathVariable("pageSize") Integer pageSize) {
         ResponseEntity<PageInfo<User>> responseEntity = new ResponseEntity<>();
         PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
-        responseEntity.setCode(200);
+        responseEntity.setCode(Constant.StatusCode.OK);
         responseEntity.setMsg("query ok");
         responseEntity.setData(userPageInfos);
         return responseEntity;
@@ -31,7 +32,7 @@ public class UserController {
         ResponseEntity<User> responseEntity = new ResponseEntity<>();
         User userById = userService.findUserById(id);
         if (userById != null) {
-            responseEntity.setCode(200);
+            responseEntity.setCode(Constant.StatusCode.OK);
             responseEntity.setMsg("query ok");
             responseEntity.setData(userById);
         } else {
@@ -49,7 +50,7 @@ public class UserController {
         Integer state = userService.deleteUserById(id);
         if (state == 1) {
             Integer pageTotal = userService.countAllUser();
-            responseEntity.setCode(200);
+            responseEntity.setCode(Constant.StatusCode.OK);
             responseEntity.setMsg("delete ok");
             responseEntity.setData(pageTotal);
         } else {
@@ -67,7 +68,7 @@ public class UserController {
         Integer state = userService.updateUserById(user);
         User userById = userService.findUserById(user.getId());
         if (state == 1) {
-            responseEntity.setCode(200);
+            responseEntity.setCode(Constant.StatusCode.OK);
             responseEntity.setMsg("update ok");
         } else {
             responseEntity.setCode(602); // 更新用户失败
@@ -84,7 +85,7 @@ public class UserController {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
         Integer state = userService.updateUserSwitchById(id, isSwitch);
         if (state == 1) {
-            responseEntity.setCode(200);
+            responseEntity.setCode(Constant.StatusCode.OK);
             responseEntity.setMsg("update switch ok");
         } else {
             responseEntity.setCode(603); // 更新switch失败

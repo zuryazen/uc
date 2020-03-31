@@ -8,19 +8,40 @@ mybatis:
   type-aliases-package: com.zhuyz.adminuser.entity
   configuration:
     map-underscore-to-camel-case: true
+    cache-enabled: false
 
-#showSql
+# write log
 logging:
+  file: debug.log
   level:
     com:
       zhuyz:
         adminuser:
-          mapper : debug
+          mapper: debug
 
 spring:
+  # datasource properties
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
     # &tinyInt1isBit=false  设置mysql的tinyInt1isBit ---  boolean
     url: jdbc:mysql://localhost:3306/admin_user?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    druid:
+      initial-size: 8
+      min-idle: 1
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runsMillis: 60000
+      min-evictable-idle-timeMillis: 300000
+      validation-query: select 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
