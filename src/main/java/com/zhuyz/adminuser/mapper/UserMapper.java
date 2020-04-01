@@ -1,5 +1,6 @@
 package com.zhuyz.adminuser.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.zhuyz.adminuser.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     // 按照分页查询用户列表
     List<User> findAllUser();

@@ -2,7 +2,7 @@ package com.zhuyz.adminuser;
 
 import com.zhuyz.adminuser.entity.User;
 import com.zhuyz.adminuser.mapper.UserMapper;
-import com.zhuyz.adminuser.service.UserService;
+import com.zhuyz.adminuser.service.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AdminUserApplicationTests {
 
 
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
 
     @Test
     public void contextLoads() {
@@ -33,7 +33,7 @@ public class AdminUserApplicationTests {
     }
     @Test
     public void testFind() {
-        System.out.println(userService.findUserById(22));
+        System.out.println(IUserService.findUserById(22));
 
     }
 
@@ -45,19 +45,19 @@ public class AdminUserApplicationTests {
         user.setPassword("1231232132132");
         user.setAddress("US");
         user.setEmail("sdfdsfds@qq.com");
-        System.out.println(userService.updateUserById(user));
+        System.out.println(IUserService.updateUserById(user));
 
     }
 
     @Test
     public void testFindService() {
-        System.out.println(userService.findUserById(22));
+        System.out.println(IUserService.findUserById(22));
 
     }
 
     @Test
     public void testSwitch() {
-        System.out.println(userService.updateUserSwitchById(22, false));
+        System.out.println(IUserService.updateUserSwitchById(22, false));
 
     }
 

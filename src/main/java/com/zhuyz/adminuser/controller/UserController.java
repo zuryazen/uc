@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zhuyz.adminuser.common.constant.Constant;
 import com.zhuyz.adminuser.entity.ResponseEntity;
 import com.zhuyz.adminuser.entity.User;
-import com.zhuyz.adminuser.service.UserService;
+import com.zhuyz.adminuser.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     // 分页查询用户列表
     @GetMapping("/findAll/{pageNum}/{pageSize}")

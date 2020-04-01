@@ -1,20 +1,29 @@
 package com.zhuyz.adminuser.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuyz.adminuser.entity.Role;
 import com.zhuyz.adminuser.entity.User;
+import com.zhuyz.adminuser.entity.UserRole;
+import com.zhuyz.adminuser.mapper.RoleMapper;
 import com.zhuyz.adminuser.mapper.UserMapper;
-import com.zhuyz.adminuser.service.UserService;
+import com.zhuyz.adminuser.mapper.UserRoleMapper;
+import com.zhuyz.adminuser.service.IUserRoleService;
+import com.zhuyz.adminuser.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Override
     public List<User> findAllUser() {
@@ -55,6 +64,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updateUserSwitchById(Integer id ,boolean isSwitch) {
         return userMapper.updateUserSwitchById(id, isSwitch);
+    }
+
+    @Override
+    public User findAllUserInfoByUserId(Integer userId) {
+        User user = userMapper.findUserById(userId);
+        List<Role> roleListByUserId = roleMapper.findRoleListByUserId(user.getId());
+        user.setRoleList(roleListByUserId);
+        return user;
     }
 
 

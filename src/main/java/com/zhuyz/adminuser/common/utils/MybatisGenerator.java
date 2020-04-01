@@ -96,8 +96,8 @@ public class MybatisGenerator {
         strategy.setRestControllerStyle(true);
         //是否继承controller
         // strategy.setSuperControllerClass("com.wy.testCodeGenerator.controller");
-        strategy.setInclude(new String[] { "test" });
-        strategy.setSuperEntityColumns("id");
+        strategy.setInclude(new String[] { "role", "permission", "role_permission", "user_role" });
+//        strategy.setSuperEntityColumns("id");
         //驼峰转连字符串
         strategy.setControllerMappingHyphenStyle(true);
         //表前缀

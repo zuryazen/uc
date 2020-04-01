@@ -1,11 +1,12 @@
 package com.zhuyz.adminuser.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.zhuyz.adminuser.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface IUserService extends IService<User> {
 
     List<User> findAllUser();
 
@@ -20,4 +21,7 @@ public interface UserService {
     Integer updateUserById(User user);
 
     Integer updateUserSwitchById(Integer id ,boolean isSwitch);
+
+    User findAllUserInfoByUserId(Integer userId);
+
 }

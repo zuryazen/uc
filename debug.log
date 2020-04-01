@@ -1,21 +1,619 @@
-2020-03-31 21:57:52.946  INFO 8764 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 8764 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
-2020-03-31 21:57:52.949  INFO 8764 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
-2020-03-31 21:57:52.995  INFO 8764 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2020-03-31 21:57:52.995  INFO 8764 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2020-03-31 21:57:53.748  INFO 8764 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2020-03-31 21:57:53.751  INFO 8764 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2020-03-31 21:57:53.778  INFO 8764 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 0 repository interfaces.
-2020-03-31 21:57:54.110  INFO 8764 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$8969db29] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2020-03-31 21:57:54.465  INFO 8764 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2020-03-31 21:57:54.485  INFO 8764 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2020-03-31 21:57:54.485  INFO 8764 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
-2020-03-31 21:57:54.605  INFO 8764 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2020-03-31 21:57:54.605  INFO 8764 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1609 ms
-2020-03-31 21:57:54.825  INFO 8764 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2020-03-31 21:57:55.137  INFO 8764 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2020-03-31 21:57:55.471  INFO 8764 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2020-03-31 21:57:56.000  INFO 8764 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2020-03-31 21:57:56.066  INFO 8764 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2020-03-31 21:57:56.070  INFO 8764 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Started AdminUserApplication in 3.606 seconds (JVM running for 6.009)
-2020-03-31 22:40:19.675  INFO 8764 --- [Thread-15] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2020-03-31 22:40:19.679  INFO 8764 --- [Thread-15] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2020-04-02 00:24:51.959  INFO 13448 --- [Thread-31] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} closed
+2020-04-02 00:24:51.963  INFO 13448 --- [Thread-31] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:24:53.168  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 13448 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:24:53.168  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:24:53.473  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:24:53.474  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:24:53.478  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4ms. Found 0 repository interfaces.
+2020-04-02 00:24:53.511  WARN 13448 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.zhuyz.adminuser.mapper]' package. Please check your configuration.
+2020-04-02 00:24:53.536  INFO 13448 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$26e21244] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:24:53.625  INFO 13448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:24:53.626  INFO 13448 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:24:53.626  INFO 13448 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:24:53.651  INFO 13448 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:24:53.652  INFO 13448 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 477 ms
+2020-04-02 00:24:53.672  WARN 13448 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'loginController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2cfb044e]
+2020-04-02 00:24:53.673  INFO 13448 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2020-04-02 00:24:53.680  INFO 13448 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-04-02 00:24:53.722 ERROR 13448 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'loginController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2cfb044e]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:265) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1269) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1184) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at com.zhuyz.adminuser.AdminUserApplication.main(AdminUserApplication.java:12) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2cfb044e]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:507) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:404) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:389) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:248) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	... 23 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/zhuyz/adminuser/entity/User
+	at java.lang.Class.getDeclaredMethods0(Native Method) ~[na:1.8.0_211]
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2701) ~[na:1.8.0_211]
+	at java.lang.Class.getDeclaredMethods(Class.java:1975) ~[na:1.8.0_211]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:489) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.zhuyz.adminuser.entity.User
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382) ~[na:1.8.0_211]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_211]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349) ~[na:1.8.0_211]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_211]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144) ~[spring-boot-devtools-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_211]
+	... 30 common frames omitted
+
+2020-04-02 00:25:00.233  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 13448 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:25:00.234  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:25:00.586  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:25:00.586  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:25:00.590  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4ms. Found 0 repository interfaces.
+2020-04-02 00:25:00.631  WARN 13448 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.zhuyz.adminuser.mapper]' package. Please check your configuration.
+2020-04-02 00:25:00.653  INFO 13448 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$26e21244] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:25:00.768  INFO 13448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:25:00.769  INFO 13448 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:25:00.769  INFO 13448 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:25:00.817  INFO 13448 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:25:00.818  INFO 13448 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 579 ms
+2020-04-02 00:25:00.850  WARN 13448 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'loginController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1935f570]
+2020-04-02 00:25:00.851  INFO 13448 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2020-04-02 00:25:00.862  INFO 13448 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-04-02 00:25:00.863 ERROR 13448 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'loginController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1935f570]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:265) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1269) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1184) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:845) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at com.zhuyz.adminuser.AdminUserApplication.main(AdminUserApplication.java:12) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.zhuyz.adminuser.controller.LoginController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1935f570]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:507) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:404) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:389) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:248) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	... 23 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/zhuyz/adminuser/entity/User
+	at java.lang.Class.getDeclaredMethods0(Native Method) ~[na:1.8.0_211]
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2701) ~[na:1.8.0_211]
+	at java.lang.Class.getDeclaredMethods(Class.java:1975) ~[na:1.8.0_211]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:489) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.zhuyz.adminuser.entity.User
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382) ~[na:1.8.0_211]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_211]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349) ~[na:1.8.0_211]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_211]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144) ~[spring-boot-devtools-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_211]
+	... 30 common frames omitted
+
+2020-04-02 00:25:02.328  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 13448 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:25:02.328  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:25:02.657  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:25:02.657  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:25:02.676  INFO 13448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19ms. Found 0 repository interfaces.
+2020-04-02 00:25:02.746  INFO 13448 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$26e21244] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:25:02.836  INFO 13448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:25:02.837  INFO 13448 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:25:02.837  INFO 13448 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:25:02.864  INFO 13448 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:25:02.864  INFO 13448 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 533 ms
+2020-04-02 00:25:02.913  INFO 13448 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2020-04-02 00:25:02.993  INFO 13448 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-4} inited
+2020-04-02 00:25:03.296  INFO 13448 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:25:03.410  INFO 13448 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-04-02 00:25:03.443  INFO 13448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-04-02 00:25:03.444  INFO 13448 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Started AdminUserApplication in 1.144 seconds (JVM running for 13176.655)
+2020-04-02 00:25:03.446  INFO 13448 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2020-04-02 00:26:21.342  INFO 13448 --- [Thread-48] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:26:21.348  INFO 13448 --- [Thread-48] com.alibaba.druid.pool.DruidDataSource   : {dataSource-4} closed
+2020-04-02 00:26:28.145  INFO 1380 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 1380 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:26:28.149  INFO 1380 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:26:28.232  INFO 1380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-04-02 00:26:28.232  INFO 1380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-04-02 00:26:29.156  INFO 1380 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:26:29.159  INFO 1380 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:26:29.198  INFO 1380 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25ms. Found 0 repository interfaces.
+2020-04-02 00:26:29.594  INFO 1380 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9c83dc78] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:26:29.929  INFO 1380 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:26:29.951  INFO 1380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:26:29.951  INFO 1380 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:26:30.146  INFO 1380 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:26:30.147  INFO 1380 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1914 ms
+2020-04-02 00:26:30.324  INFO 1380 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2020-04-02 00:26:30.652  INFO 1380 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2020-04-02 00:26:31.126  INFO 1380 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:26:31.754  INFO 1380 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-04-02 00:26:31.825  INFO 1380 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-04-02 00:26:31.829  INFO 1380 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Started AdminUserApplication in 4.169 seconds (JVM running for 6.569)
+2020-04-02 00:26:47.217  INFO 1380 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-02 00:26:47.217  INFO 1380 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-04-02 00:26:47.225  INFO 1380 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2020-04-02 00:26:47.293 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:26:47.400 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 1(Integer)
+2020-04-02 00:26:47.427 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:26:47.430 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:26:47.437 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 1(Integer)
+2020-04-02 00:26:47.442 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.idwhere rp.role_id = ? 
+2020-04-02 00:26:47.447 ERROR 1380 --- [http-nio-8080-exec-2] c.alibaba.druid.filter.stat.StatFilter   : merge sql error, dbType mysql, druid-1.1.10, sql : select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.idwhere rp.role_id = ?
+
+com.alibaba.druid.sql.parser.ParserException: syntax error, error in :'here rp.role_id = ?', expect DOT, actual DOT pos 130, line 1, column 130, token DOT
+	at com.alibaba.druid.sql.parser.SQLParser.printError(SQLParser.java:284) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:426) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:72) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:94) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:77) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:50) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.stat.StatFilter.mergeSql(StatFilter.java:147) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.stat.StatFilter.createSqlStat(StatFilter.java:648) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.stat.StatFilter.statementPrepareAfter(StatFilter.java:311) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.FilterEventAdapter.connection_prepareStatement(FilterEventAdapter.java:124) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.FilterChainImpl.connection_prepareStatement(FilterChainImpl.java:568) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.prepareStatement(ConnectionProxyImpl.java:342) [druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.pool.DruidPooledConnection.prepareStatement(DruidPooledConnection.java:349) [druid-1.1.10.jar:1.1.10]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.apache.ibatis.logging.jdbc.ConnectionLogger.invoke(ConnectionLogger.java:55) [mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy105.prepareStatement(Unknown Source) [na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.instantiateStatement(PreparedStatementHandler.java:86) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.BaseStatementHandler.prepare(BaseStatementHandler.java:88) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.prepare(RoutingStatementHandler.java:59) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.SimpleExecutor.prepareStatement(SimpleExecutor.java:87) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:62) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.loader.ResultLoader.selectList(ResultLoader.java:81) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.loader.ResultLoader.loadResult(ResultLoader.java:70) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getNestedQueryMappingValue(DefaultResultSetHandler.java:760) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getPropertyMappingValue(DefaultResultSetHandler.java:465) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyPropertyMappings(DefaultResultSetHandler.java:441) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:404) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:354) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:328) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:301) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:194) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) [mybatis-3.5.4.jar:3.5.4]
+	at com.github.pagehelper.PageInterceptor.intercept(PageInterceptor.java:143) [pagehelper-5.1.2.jar:na]
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61) [mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy104.query(Unknown Source) [na:na]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140) [mybatis-3.5.4.jar:3.5.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426) [mybatis-spring-2.0.4.jar:2.0.4]
+	at com.sun.proxy.$Proxy76.selectList(Unknown Source) [na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:223) [mybatis-spring-2.0.4.jar:2.0.4]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:144) [mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:85) [mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy79.findRoleListByUserId(Unknown Source) [na:na]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl.findAllUserInfoByUserId(UserServiceImpl.java:72) [classes/:na]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl$$FastClassBySpringCGLIB$$8ccc70bc.invoke(<generated>) [classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) [spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684) [spring-aop-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl$$EnhancerBySpringCGLIB$$adf43969.findAllUserInfoByUserId(<generated>) [classes/:na]
+	at com.zhuyz.adminuser.controller.TestController.findUserInfo(TestController.java:25) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1039) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) [druid-1.1.10.jar:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:853) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1587) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_211]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_211]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_211]
+
+2020-04-02 00:26:47.449 DEBUG 1380 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:26:47.542 ERROR 1380 --- [http-nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rp.role_id = 3' at line 1
+### The error may exist in com/zhuyz/adminuser/mapper/PermissionMapper.java (best guess)
+### The error may involve com.zhuyz.adminuser.mapper.PermissionMapper.findPermissionListByRoleId-Inline
+### The error occurred while setting parameters
+### SQL: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.idwhere rp.role_id = ?
+### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rp.role_id = 3' at line 1
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rp.role_id = 3' at line 1] with root cause
+
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rp.role_id = 3' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.16.jar:8.0.16]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.16.jar:8.0.16]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.16.jar:8.0.16]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:955) ~[mysql-connector-java-8.0.16.jar:8.0.16]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:372) ~[mysql-connector-java-8.0.16.jar:8.0.16]
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:3409) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:3407) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:167) ~[druid-1.1.10.jar:1.1.10]
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:498) ~[druid-1.1.10.jar:1.1.10]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59) ~[mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy106.execute(Unknown Source) ~[na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:64) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.loader.ResultLoader.selectList(ResultLoader.java:81) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.loader.ResultLoader.loadResult(ResultLoader.java:70) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getNestedQueryMappingValue(DefaultResultSetHandler.java:760) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getPropertyMappingValue(DefaultResultSetHandler.java:465) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyPropertyMappings(DefaultResultSetHandler.java:441) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:404) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:354) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:328) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:301) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:194) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) ~[mybatis-3.5.4.jar:3.5.4]
+	at com.github.pagehelper.PageInterceptor.intercept(PageInterceptor.java:143) ~[pagehelper-5.1.2.jar:na]
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61) ~[mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy104.query(Unknown Source) ~[na:na]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140) ~[mybatis-3.5.4.jar:3.5.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426) ~[mybatis-spring-2.0.4.jar:2.0.4]
+	at com.sun.proxy.$Proxy76.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:223) ~[mybatis-spring-2.0.4.jar:2.0.4]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:144) ~[mybatis-3.5.4.jar:3.5.4]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:85) ~[mybatis-3.5.4.jar:3.5.4]
+	at com.sun.proxy.$Proxy79.findRoleListByUserId(Unknown Source) ~[na:na]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl.findAllUserInfoByUserId(UserServiceImpl.java:72) ~[classes/:na]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl$$FastClassBySpringCGLIB$$8ccc70bc.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684) ~[spring-aop-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at com.zhuyz.adminuser.service.impl.UserServiceImpl$$EnhancerBySpringCGLIB$$adf43969.findAllUserInfoByUserId(<generated>) ~[classes/:na]
+	at com.zhuyz.adminuser.controller.TestController.findUserInfo(TestController.java:25) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_211]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_211]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_211]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_211]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1039) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) ~[druid-1.1.10.jar:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:853) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1587) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_211]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_211]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_211]
+
+2020-04-02 00:28:19.973  INFO 1380 --- [Thread-16] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:28:19.977  INFO 1380 --- [Thread-16] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2020-04-02 00:28:30.099  INFO 6672 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 6672 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:28:30.102  INFO 6672 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:28:30.151  INFO 6672 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-04-02 00:28:30.152  INFO 6672 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-04-02 00:28:31.024  INFO 6672 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:28:31.026  INFO 6672 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:28:31.063  INFO 6672 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 repository interfaces.
+2020-04-02 00:28:31.444  INFO 6672 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d13ee389] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:28:31.780  INFO 6672 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:28:31.802  INFO 6672 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:28:31.803  INFO 6672 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:28:31.998  INFO 6672 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:28:31.998  INFO 6672 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1846 ms
+2020-04-02 00:28:32.168  INFO 6672 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2020-04-02 00:28:32.462  INFO 6672 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2020-04-02 00:28:32.903  INFO 6672 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:28:33.527  INFO 6672 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-04-02 00:28:33.594  INFO 6672 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-04-02 00:28:33.598  INFO 6672 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Started AdminUserApplication in 3.963 seconds (JVM running for 6.326)
+2020-04-02 00:28:37.679  INFO 6672 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-02 00:28:37.679  INFO 6672 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-04-02 00:28:37.686  INFO 6672 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2020-04-02 00:28:37.755 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:28:37.850 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 1(Integer)
+2020-04-02 00:28:37.875 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:28:37.878 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:28:37.882 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 1(Integer)
+2020-04-02 00:28:37.885 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:28:37.885 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:28:37.887 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:28:37.887 DEBUG 6672 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 1
+2020-04-02 00:29:43.593 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:29:43.594 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 2(Integer)
+2020-04-02 00:29:43.596 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:29:43.597 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:29:43.597 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 2(Integer)
+2020-04-02 00:29:43.598 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:29:43.599 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:29:43.600 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:29:43.601 DEBUG 6672 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 1
+2020-04-02 00:29:50.367 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:29:50.367 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:29:50.369 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:29:50.370 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:29:50.371 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:29:50.372 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:29:50.373 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:29:50.374 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:29:50.375 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:29:50.375 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:29:50.377 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:29:50.377 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:29:50.377 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:29:50.379 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:29:50.379 DEBUG 6672 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
+2020-04-02 00:34:10.880 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:34:10.881 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:34:10.883 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:34:10.883 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:34:10.884 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:34:10.885 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:10.885 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:34:10.888 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:34:10.889 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:10.889 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:34:10.890 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:34:10.890 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:10.891 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:34:10.894 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:34:10.894 DEBUG 6672 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
+2020-04-02 00:34:17.837  INFO 6672 --- [Thread-16] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:34:17.838  INFO 6672 --- [Thread-16] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2020-04-02 00:34:27.431  INFO 16868 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Starting AdminUserApplication on DESKTOP-PADF7J8 with PID 16868 (D:\devApp\ideaData\admin_user\target\classes started by Administrator in D:\devApp\ideaData\admin_user)
+2020-04-02 00:34:27.433  INFO 16868 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : The following profiles are active: dev
+2020-04-02 00:34:27.506  INFO 16868 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-04-02 00:34:27.506  INFO 16868 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-04-02 00:34:28.345  INFO 16868 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-02 00:34:28.348  INFO 16868 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-04-02 00:34:28.386  INFO 16868 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 repository interfaces.
+2020-04-02 00:34:28.765  INFO 16868 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$3a18f707] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-02 00:34:29.101  INFO 16868 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-02 00:34:29.123  INFO 16868 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-02 00:34:29.124  INFO 16868 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-04-02 00:34:29.392  INFO 16868 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-04-02 00:34:29.392  INFO 16868 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1886 ms
+2020-04-02 00:34:29.561  INFO 16868 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2020-04-02 00:34:29.843  INFO 16868 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2020-04-02 00:34:30.290  INFO 16868 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-02 00:34:30.914  INFO 16868 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-04-02 00:34:30.979  INFO 16868 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-04-02 00:34:30.982  INFO 16868 --- [restartedMain] c.zhuyz.adminuser.AdminUserApplication   : Started AdminUserApplication in 4.021 seconds (JVM running for 6.379)
+2020-04-02 00:34:35.488  INFO 16868 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-02 00:34:35.489  INFO 16868 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-04-02 00:34:35.497  INFO 16868 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2020-04-02 00:34:35.569 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:34:35.666 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:34:35.693 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:34:35.696 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:34:35.701 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:34:35.704 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:35.705 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:34:35.708 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:34:35.708 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:35.709 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:34:35.710 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:34:35.711 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:35.711 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:34:35.713 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:34:35.713 DEBUG 16868 --- [http-nio-8080-exec-2] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
+2020-04-02 00:34:53.985 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:34:53.985 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:34:53.987 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:34:53.988 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:34:53.988 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:34:53.990 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:53.990 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:34:53.992 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:34:53.993 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:53.993 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:34:53.994 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:34:53.995 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:53.996 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:34:53.999 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:34:53.999 DEBUG 16868 --- [http-nio-8080-exec-4] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
+2020-04-02 00:34:59.950 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:34:59.950 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:34:59.962 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:34:59.963 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:34:59.964 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:34:59.965 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:59.966 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:34:59.967 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:34:59.968 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:59.968 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:34:59.970 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:34:59.970 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:34:59.971 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:34:59.972 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:34:59.972 DEBUG 16868 --- [http-nio-8080-exec-3] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
+2020-04-02 00:35:05.628 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:35:05.629 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 4(Integer)
+2020-04-02 00:35:05.631 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:35:05.633 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:35:05.633 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 4(Integer)
+2020-04-02 00:35:05.634 DEBUG 16868 --- [http-nio-8080-exec-5] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 0
+2020-04-02 00:35:13.802 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:35:13.802 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 5(Integer)
+2020-04-02 00:35:13.803 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:35:13.804 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:35:13.805 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 5(Integer)
+2020-04-02 00:35:13.806 DEBUG 16868 --- [http-nio-8080-exec-6] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 0
+2020-04-02 00:35:16.967 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:35:16.968 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 1(Integer)
+2020-04-02 00:35:16.969 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:35:16.970 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:35:16.971 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 1(Integer)
+2020-04-02 00:35:16.972 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:35:16.972 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:35:16.973 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:35:16.973 DEBUG 16868 --- [http-nio-8080-exec-7] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 1
+2020-04-02 00:35:23.554 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:35:23.555 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 2(Integer)
+2020-04-02 00:35:23.556 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:35:23.556 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:35:23.557 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 2(Integer)
+2020-04-02 00:35:23.558 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:35:23.558 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:35:23.559 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:35:23.560 DEBUG 16868 --- [http-nio-8080-exec-8] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 1
+2020-04-02 00:35:31.736 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : ==>  Preparing: select * from user where id = ? 
+2020-04-02 00:35:31.736 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : ==> Parameters: 3(Integer)
+2020-04-02 00:35:31.737 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.mapper.UserMapper.findUserById     : <==      Total: 1
+2020-04-02 00:35:31.738 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : ==>  Preparing: select ur.role_id as id, r.name as name, r.description as description from user_role ur left join role r on ur.role_id = r.id where ur.user_id = ? 
+2020-04-02 00:35:31.738 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : ==> Parameters: 3(Integer)
+2020-04-02 00:35:31.739 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:35:31.740 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 1(Integer)
+2020-04-02 00:35:31.741 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 2
+2020-04-02 00:35:31.741 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:35:31.741 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 2(Integer)
+2020-04-02 00:35:31.742 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 4
+2020-04-02 00:35:31.743 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====>  Preparing: select p.id as id, p.name as name, p.url as url from role_permission rp left join permission p on rp.permission_id = p.id where rp.role_id = ? 
+2020-04-02 00:35:31.743 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : ====> Parameters: 3(Integer)
+2020-04-02 00:35:31.744 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.P.findPermissionListByRoleId     : <====      Total: 3
+2020-04-02 00:35:31.744 DEBUG 16868 --- [http-nio-8080-exec-9] c.z.a.m.RoleMapper.findRoleListByUserId  : <==      Total: 3
