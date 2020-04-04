@@ -14,14 +14,18 @@ public interface IUserService extends IService<User> {
 
     User findUserById(Integer id);
 
+    User findUserByUsername(String username);
+
     Integer countAllUser();
 
     Integer deleteUserById(Integer id);
 
     Integer updateUserById(User user);
 
-    Integer updateUserSwitchById(Integer id ,boolean isSwitch);
+    Integer updateUserOpenById(Integer id ,boolean isSwitch);
 
     User findAllUserInfoByUserId(Integer userId);
+
+    User findAllUserInfoByUsername(String name);
 
 }

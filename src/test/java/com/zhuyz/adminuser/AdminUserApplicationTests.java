@@ -57,7 +57,7 @@ public class AdminUserApplicationTests {
 
     @Test
     public void testSwitch() {
-        System.out.println(IUserService.updateUserSwitchById(22, false));
+        System.out.println(IUserService.updateUserOpenById(22, false));
 
     }
 

@@ -1,7 +1,6 @@
 package com.zhuyz.adminuser.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zhuyz.adminuser.common.constant.Constant;
 import com.zhuyz.adminuser.entity.ResponseEntity;
 import com.zhuyz.adminuser.entity.User;
 import com.zhuyz.adminuser.service.IUserService;
@@ -15,84 +14,80 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-    // 分页查询用户列表
+    /**
+     * 分页查询用户列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @GetMapping("/findAll/{pageNum}/{pageSize}")
     public ResponseEntity<PageInfo<User>> findAllUser(@PathVariable("pageNum") Integer pageNum,
                                                 @PathVariable("pageSize") Integer pageSize) {
         ResponseEntity<PageInfo<User>> responseEntity = new ResponseEntity<>();
         PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
-        responseEntity.setCode(Constant.StatusCode.OK);
-        responseEntity.setMsg("query ok");
-        responseEntity.setData(userPageInfos);
-        return responseEntity;
+        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
     }
 
     @GetMapping("/findUser/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Integer id) {
-        ResponseEntity<User> responseEntity = new ResponseEntity<>();
+    public ResponseEntity findUserById(@PathVariable("id") Integer id) {
+        ResponseEntity responseEntity = new ResponseEntity<>();
         User userById = userService.findUserById(id);
         if (userById != null) {
-            responseEntity.setCode(Constant.StatusCode.OK);
-            responseEntity.setMsg("query ok");
-            responseEntity.setData(userById);
+            return ResponseEntity.buildSuccess(userById);
         } else {
-            responseEntity.setCode(603);
-            responseEntity.setMsg("user not found");
-            responseEntity.setData(userById);
+            return ResponseEntity.buildCustom("user not found", 604);
         }
-        return responseEntity;
     }
 
-    // 根据用户id删除用户
+    /**
+     * 根据用户id删除用户
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Integer> deleteUserById(@PathVariable("id") Integer id) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
         Integer state = userService.deleteUserById(id);
         if (state == 1) {
             Integer pageTotal = userService.countAllUser();
-            responseEntity.setCode(Constant.StatusCode.OK);
-            responseEntity.setMsg("delete ok");
-            responseEntity.setData(pageTotal);
+            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
         } else {
-            responseEntity.setCode(601); //code: 删除用户失败
-            responseEntity.setMsg("delete error");
-            responseEntity.setData(null);
+           return ResponseEntity.buildCustom(null, 601, "delete error");
         }
-        return responseEntity;
     }
 
-    // 根据用户id更新是否启用开关
+    /**
+     * 根据用户id更新是否启用开关
+     * @param user
+     * @return
+     */
     @PutMapping("/update")
     public ResponseEntity<User> updateUserById(@RequestBody User user) {
         ResponseEntity<User> responseEntity = new ResponseEntity<>();
         Integer state = userService.updateUserById(user);
         User userById = userService.findUserById(user.getId());
         if (state == 1) {
-            responseEntity.setCode(Constant.StatusCode.OK);
-            responseEntity.setMsg("update ok");
+            return ResponseEntity.buildSuccess(userById, "update ok");
         } else {
-            responseEntity.setCode(602); // 更新用户失败
-            responseEntity.setMsg("update error");
+            return  ResponseEntity.buildError(userById, 602, "update error");
         }
-        responseEntity.setData(userById);
-        return responseEntity;
     }
 
-
-    // 根据用户id更新用户
-    @PutMapping("/updateSwitch/{id}/{isSwitch}")
-    public ResponseEntity<Integer> updateUserSwitchById(@PathVariable("id") Integer id, @PathVariable("isSwitch") boolean isSwitch) {
+    /**
+     * 根据用户id更新用户
+     * @param id
+     * @param open
+     * @return
+     */
+    @PutMapping("/updateSwitch/{id}/{open}")
+    public ResponseEntity<Integer> updateUserSwitchById(@PathVariable("id") Integer id, @PathVariable("open") boolean open) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
-        Integer state = userService.updateUserSwitchById(id, isSwitch);
+        Integer state = userService.updateUserOpenById(id, open);
         if (state == 1) {
-            responseEntity.setCode(Constant.StatusCode.OK);
-            responseEntity.setMsg("update switch ok");
+           return ResponseEntity.buildSuccess(state, "update open ok");
         } else {
-            responseEntity.setCode(603); // 更新switch失败
-            responseEntity.setMsg("update switch error");
+            return ResponseEntity.buildError(state, 603, "update open error");
         }
-        responseEntity.setData(state);
-        return responseEntity;
     }
 
 }

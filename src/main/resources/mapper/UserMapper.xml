@@ -8,11 +8,11 @@
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="isSwitch" jdbcType="TINYINT" property="isSwitch" />
+        <result column="open" jdbcType="TINYINT" property="open" />
     </resultMap>
 
     <select id="findAllUser" resultType="com.zhuyz.adminuser.entity.User">
-        select id, name, address, email, isSwitch from user
+        select id, name, address, email, open from user
     </select>
 
     <select id="findUserById" parameterType="java.lang.Integer" resultType="com.zhuyz.adminuser.entity.User">
@@ -39,10 +39,10 @@
             id = #{id}
     </update>
 
-    <update id="updateUserSwitchById">
+    <update id="updateUserOpenById">
         update user
         <set>
-            <if test="isSwitch != null">isSwitch = #{isSwitch}</if>
+            <if test="open != null">open = #{open}</if>
         </set>
         where
         id = #{id}

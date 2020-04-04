@@ -1,4 +1,4 @@
-package com.zhuyz.adminuser.controller;
+package com.zhuyz.adminuser.controller.test;
 
 import com.zhuyz.adminuser.entity.ResponseEntity;
 import com.zhuyz.adminuser.entity.User;

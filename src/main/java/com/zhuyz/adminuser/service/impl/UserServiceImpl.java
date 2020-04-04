@@ -43,6 +43,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userMapper.findUserById(id);
     }
 
+    @Override
+    public User findUserByUsername(String username) {
+        return userMapper.findUserByUsername(username);
+    }
+
 
     @Override
     public Integer countAllUser() {
@@ -62,8 +67,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Integer updateUserSwitchById(Integer id ,boolean isSwitch) {
-        return userMapper.updateUserSwitchById(id, isSwitch);
+    public Integer updateUserOpenById(Integer id ,boolean isSwitch) {
+        return userMapper.updateUserOpenById(id, isSwitch);
     }
 
     @Override
@@ -74,5 +79,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return user;
     }
 
+    @Override
+    public User findAllUserInfoByUsername(String name) {
+        User user = userMapper.findUserByUsername(name);
+        List<Role> roleListByUserId = roleMapper.findRoleListByUserId(user.getId());
+        user.setRoleList(roleListByUserId);
+        return user;
+    }
 
 }

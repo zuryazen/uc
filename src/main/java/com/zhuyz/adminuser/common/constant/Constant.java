@@ -19,6 +19,8 @@ public class Constant {
         public static final Integer FORBIDDEN = 403;
         // 请求资源不存在
         public static final Integer NOT_FOUND = 404;
+        // 登录失败
+        public static final Integer LOGIN_ERROR = 405;
         // 服务器发生不可预期的错误,排查服务端的日志
         public static final Integer INTERNAL_SERVER_ERROR = 500;
         // 服务器当前不能处理客户端的请求

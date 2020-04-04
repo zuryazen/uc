@@ -45,3 +45,8 @@ spring:
       filters: stat
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       use-global-data-source-stat: true
+
+  # redis properties
+  redis:
+    host: 127.0.0.1
+    port: 6379
