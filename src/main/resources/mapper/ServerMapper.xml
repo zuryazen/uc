@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tech.uc.mapper.RoleMapper">
+<mapper namespace="com.tech.uc.mapper.ServerMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Role">
+    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Server">
         <id column="ID" property="id" />
-        <result column="NAME" property="name" />
-        <result column="CODE" property="code" />
-        <result column="ENABLED" property="enabled" />
-        <result column="ORG_ID" property="orgId" />
-        <result column="SORT" property="sort" />
-        <result column="REMARKS" property="remarks" />
+        <result column="SERVER_NAME" property="serverName" />
+        <result column="URI" property="uri" />
+        <result column="PROJECT_NO" property="projectNo" />
         <result column="CREATE_TIME" property="createTime" />
         <result column="CREATE_USER_NAME" property="createUserName" />
         <result column="UPDATE_TIME" property="updateTime" />

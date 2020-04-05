@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tech.uc.mapper.RoleMapper">
+<mapper namespace="com.tech.uc.mapper.OrgMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Role">
+    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Org">
         <id column="ID" property="id" />
-        <result column="NAME" property="name" />
+        <result column="PID" property="pid" />
+        <result column="FULL_NAME" property="fullName" />
+        <result column="SIMPLE_NAME" property="simpleName" />
         <result column="CODE" property="code" />
-        <result column="ENABLED" property="enabled" />
-        <result column="ORG_ID" property="orgId" />
+        <result column="PHONE" property="phone" />
+        <result column="BUILD_DATE" property="buildDate" />
         <result column="SORT" property="sort" />
         <result column="REMARKS" property="remarks" />
         <result column="CREATE_TIME" property="createTime" />

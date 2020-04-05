@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tech.uc.mapper.FileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tech.uc.entity.File">
+        <id column="ID" property="id" />
+        <result column="FILE_NAME" property="fileName" />
+        <result column="FILE_PATH" property="filePath" />
+        <result column="FILE_SUFFIX" property="fileSuffix" />
+        <result column="FILE_SIZE" property="fileSize" />
+        <result column="FILE_CREATE_TIME" property="fileCreateTime" />
+        <result column="FILE_UPDATE_TIME" property="fileUpdateTime" />
+        <result column="CREATE_USER" property="createUser" />
+        <result column="CREATE_USER_NAME" property="createUserName" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_USER" property="updateUser" />
+        <result column="UPDATE_USER_NAME" property="updateUserName" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="DELETE_USER" property="deleteUser" />
+        <result column="DELETE_USER_NAME" property="deleteUserName" />
+        <result column="DELETE_TIME" property="deleteTime" />
+        <result column="DELETE_FLAG" property="deleteFlag" />
+    </resultMap>
+
+</mapper>

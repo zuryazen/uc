@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuyz.adminuser.mapper.UserMapper">
+<mapper namespace="com.tech.uc.mapper.UserMapper">
 
-    <resultMap id="UserMap" type="com.zhuyz.adminuser.entity.User">
-        <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="open" jdbcType="TINYINT" property="open" />
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tech.uc.entity.User">
+        <id column="ID" property="id" />
+        <result column="USERNAME" property="username" />
+        <result column="PASSWORD" property="password" />
+        <result column="SALT" property="salt" />
+        <result column="FULL_NAME" property="fullName" />
+        <result column="BIRTHDAY" property="birthday" />
+        <result column="SEX" property="sex" />
+        <result column="ICON" property="icon" />
+        <result column="EMAIL" property="email" />
+        <result column="PHONE" property="phone" />
+        <result column="ADDRESS" property="address" />
+        <result column="STATUS" property="status" />
+        <result column="SORT" property="sort" />
+        <result column="REMARKS" property="remarks" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATE_USER_NAME" property="createUserName" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATE_USER_NAME" property="updateUserName" />
+        <result column="DELETE_TIME" property="deleteTime" />
+        <result column="DELETE_USER_NAME" property="deleteUserName" />
+        <result column="CREATE_USER" property="createUser" />
+        <result column="UPDATE_USER" property="updateUser" />
+        <result column="DELETE_USER" property="deleteUser" />
+        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
 
-    <select id="findAllUser" resultType="com.zhuyz.adminuser.entity.User">
-        select id, name, address, email, open from user
+    <select id="findAllUser" resultType="com.tech.uc.entity.User">
+        select * from user
     </select>
 
-    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.zhuyz.adminuser.entity.User">
+    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.tech.uc.entity.User">
         select * from user where id = #{id}
     </select>
 
@@ -23,29 +42,32 @@
         select count(id) from user
     </select>
 
-    <delete id="deleteUeserById">
+    <delete id="deleteUserById">
         delete from user where id = #{id}
     </delete>
 
-    <update id="updateUserById" parameterType="com.zhuyz.adminuser.entity.User">
+    <update id="updateUserById" parameterType="com.tech.uc.entity.User">
         update user
         <set>
-            <if test="name != null">name = #{name},</if>
+            <if test="username != null">username = #{username},</if>
             <if test="password != null">password = #{password},</if>
             <if test="address != null">address = #{address},</if>
             <if test="email != null">email = #{email},</if>
         </set>
         where
-            id = #{id}
+        id = #{id}
     </update>
 
-    <update id="updateUserOpenById">
+    <update id="updateUserStatusById">
         update user
         <set>
-            <if test="open != null">open = #{open}</if>
+            <if test="status != null">status = #{status}</if>
         </set>
         where
         id = #{id}
     </update>
+
+
+
 
 </mapper>

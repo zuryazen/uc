@@ -23,11 +23,11 @@ spring:
   # datasource properties
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 123456
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: uc
+    password: root
     # &tinyInt1isBit=false  设置mysql的tinyInt1isBit ---  boolean
-    url: jdbc:mysql://localhost:3306/admin_user?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:oracle:thin:@localhost:1521:orcl
     druid:
       initial-size: 8
       min-idle: 1
