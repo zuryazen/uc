@@ -36,19 +36,21 @@ public class UserController {
     @GetMapping("/findAll/{pageNum}/{pageSize}")
     public ResponseEntity<PageInfo<User>> findAllUser(@PathVariable("pageNum") Integer pageNum,
                                                       @PathVariable("pageSize") Integer pageSize, HttpServletRequest request) {
-        PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
-        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
+//        PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
+//        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
+        return null;
     }
 
     @GetMapping("/findUser/{id}")
     public ResponseEntity findUserById(@PathVariable("id") Integer id) {
         ResponseEntity responseEntity = new ResponseEntity<>();
-        User userById = userService.findUserById(id);
-        if (userById != null) {
-            return ResponseEntity.buildSuccess(userById);
-        } else {
-            return ResponseEntity.buildCustom("user not found", 604);
-        }
+//        User userById = userService.findUserById(id);
+//        if (userById != null) {
+//            return ResponseEntity.buildSuccess(userById);
+//        } else {
+//            return ResponseEntity.buildCustom("user not found", 604);
+//        }
+        return null;
     }
 
     /**
@@ -59,13 +61,14 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Integer> deleteUserById(@PathVariable("id") Integer id) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
-        Integer state = userService.deleteUserById(id);
-        if (state == 1) {
-            Integer pageTotal = userService.countAllUser();
-            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
-        } else {
-            return ResponseEntity.buildCustom(null, 601, "delete error");
-        }
+//        Integer state = userService.deleteUserById(id);
+//        if (state == 1) {
+//            Integer pageTotal = userService.countAllUser();
+//            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
+//        } else {
+//            return ResponseEntity.buildCustom(null, 601, "delete error");
+//        }
+        return null;
     }
 
     /**
@@ -76,13 +79,14 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<User> updateUserById(@RequestBody User user) {
         ResponseEntity<User> responseEntity = new ResponseEntity<>();
-        Integer state = userService.updateUserById(user);
-        User userById = userService.findUserById(user.getId());
-        if (state == 1) {
-            return ResponseEntity.buildSuccess(userById, "update ok");
-        } else {
-            return  ResponseEntity.buildError(userById, 602, "update error");
-        }
+//        Integer state = userService.updateUserById(user);
+//        User userById = userService.findUserById(user.getId());
+//        if (state == 1) {
+//            return ResponseEntity.buildSuccess(userById, "update ok");
+//        } else {
+//            return  ResponseEntity.buildError(userById, 602, "update error");
+//        }
+        return null;
     }
 
     /**
@@ -94,12 +98,13 @@ public class UserController {
     @PutMapping("/updateOpen/{id}/{open}")
     public ResponseEntity<Integer> updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("open") boolean open) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
-        Integer state = userService.updateUserOpenById(id, open);
-        if (state == 1) {
-            return ResponseEntity.buildSuccess(state, "update open ok");
-        } else {
-            return ResponseEntity.buildError(state, 603, "update open error");
-        }
+//        Integer state = userService.updateUserOpenById(id, open);
+//        if (state == 1) {
+//            return ResponseEntity.buildSuccess(state, "update open ok");
+//        } else {
+//            return ResponseEntity.buildError(state, 603, "update open error");
+//        }
+        return null;
     }
 
 

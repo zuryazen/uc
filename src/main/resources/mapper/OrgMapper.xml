@@ -3,26 +3,156 @@
 <mapper namespace="com.tech.uc.mapper.OrgMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Org">
+    <resultMap id="map" type="com.tech.uc.entity.Org">
         <id column="ID" property="id" />
-        <result column="PID" property="pid" />
-        <result column="FULL_NAME" property="fullName" />
-        <result column="SIMPLE_NAME" property="simpleName" />
-        <result column="CODE" property="code" />
-        <result column="PHONE" property="phone" />
-        <result column="BUILD_DATE" property="buildDate" />
-        <result column="SORT" property="sort" />
-        <result column="REMARKS" property="remarks" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
+
+    <select id="getOrgListByPId" parameterType="string" resultMap="map">
+        SELECT
+            id,
+            pId,
+            full_name,
+            simple_name,
+            code,
+            phone,
+            build_date,
+            sort,
+            remarks,
+            district,
+            orgLevel
+        FROM t_base_org
+        WHERE pId = #{pId}
+        AND DELETE_FLAG = 0
+    </select>
+
+    <select id="getOrgListByCondition" parameterType="map" resultMap="map">
+        SELECT
+        id,
+        pId,
+        full_name,
+        simple_name,
+        code,
+        phone,
+        build_date,
+        sort,
+        remarks,
+        district,
+        org_level
+        FROM t_base_org
+        WHERE
+        1 = 1
+        AND DELETE_FLAG = 0
+        AND pId = #{pId}
+
+        <if test="fullName != null and fullName != ''">
+            AND full_name like concat('%', #{fullName}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            AND code like concat('%', #{code}, '%')
+        </if>
+
+        ORDER BY sort
+    </select>
+
+
+    <select id="getOrgListByUserId" parameterType="string" resultMap="map">
+        SELECT
+            a.id,
+            a.pId,
+            a.full_name,
+            a.simple_name,
+            a.code,
+            a.phone,
+            a.build_date,
+            a.sort,
+            a.remarks,
+            a.district,
+            a.org_level
+        FROM t_base_org a
+            JOIN t_base_org_user b ON a.id = b.org_id
+            JOIN t_base_user c ON c.id = b.user_id
+        WHERE c.id = #{userId}
+        AND a.DELETE_FLAG = 0
+        ORDER BY a.sort
+    </select>
+
+    <select id="getAllOrgListByPId" parameterType="string" resultMap="map">
+        SELECT
+            LEVEL,
+            A.ID,
+            A.PID,
+            A.FULL_NAME,
+            A.SIMPLE_NAME,
+            A.CODE,
+            A.PHONE,
+            TRUNC(A.BUILD_DATE, 'dd') buildDate,
+            A.SORT,
+            A.REMARKS,
+            A.DISTRICT,
+            A.ORG_LEVEL
+        FROM T_BASE_ORG A
+        WHERE 1 = 1
+        START WITH A.PID = #{pId} connect BY A.pId = prior A.id ORDER BY LEVEL, A.sort
+    </select>
+
+
+    <select id="getAllPOrgListById" parameterType="string" resultMap="map">
+        SELECT
+            LEVEL,
+            A.ID,
+            A.PID,
+            A.FULL_NAME,
+            A.SIMPLE_NAME,
+            A.CODE,
+            A.PHONE,
+            TRUNC(A.BUILD_DATE, 'dd') buildDate,
+            A.SORT,
+            A.REMARKS,
+            A.DISTRICT,
+            A.ORG_LEVEL
+        FROM T_BASE_ORG A
+        WHERE 1 = 1
+        START WITH A.id = #{id} connect BY A.id = prior A.pId ORDER BY LEVEL, A.sort
+    </select>
+
+
+    <select id="getAllOrgListById" parameterType="string" resultMap="map">
+        SELECT
+        LEVEL,
+        A.ID,
+        A.PID,
+        A.FULL_NAME,
+        A.SIMPLE_NAME,
+        A.CODE,
+        A.PHONE,
+        TRUNC(A.BUILD_DATE, 'dd') buildDate,
+        A.SORT,
+        A.REMARKS,
+        A.DISTRICT,
+        A.ORG_LEVEL
+        FROM T_BASE_ORG A
+        WHERE 1 = 1
+        START WITH A.ID = #{id} connect BY A.pId = prior A.id ORDER BY LEVEL, A.sort
+    </select>
+
+
+    <select id="getByCode" parameterType="map" resultMap="map">
+        SELECT
+            id,
+            pId,
+            full_name,
+            simple_name,
+            code,
+            phone,
+            build_date,
+            sort,
+            remarks,
+            district,
+            org_level
+        FROM t_base_org
+        WHERE CODE = #{code}
+        AND DELETE_FLAG = 0
+    </select>
+
 
 </mapper>

@@ -83,7 +83,7 @@ public class User extends Model<User> {
     private String district;
 
     // 用户所属菜单（已被格式化为树形结构）
-    private List<Map<String, Object>> menus;
+    private List<Resource> menus;
 
     // 用户附带的参数（扩展用）
     private Map<String, Object> params;

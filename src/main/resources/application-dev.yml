@@ -50,3 +50,8 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+    jedis:
+      pool:
+        min-idle: 50
+        max-active: 20
+        max-wait: 5000

@@ -3,22 +3,14 @@
 <mapper namespace="com.tech.uc.mapper.DictGroupMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.DictGroup">
+    <resultMap id="map" type="com.tech.uc.entity.DictGroup">
         <id column="ID" property="id" />
-        <result column="NAME" property="name" />
-        <result column="KEY" property="key" />
-        <result column="SORT" property="sort" />
-        <result column="DESCRIPTION" property="description" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
+
+    <select id="getAll" resultMap="map">
+        SELECT *
+        FROM t_base_dict_group
+        ORDER BY sort
+    </select>
 
 </mapper>

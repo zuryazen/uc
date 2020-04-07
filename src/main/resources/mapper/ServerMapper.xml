@@ -3,21 +3,26 @@
 <mapper namespace="com.tech.uc.mapper.ServerMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Server">
+    <resultMap id="map" type="com.tech.uc.entity.Server">
         <id column="ID" property="id" />
-        <result column="SERVER_NAME" property="serverName" />
-        <result column="URI" property="uri" />
-        <result column="PROJECT_NO" property="projectNo" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
 
+    <select id="getServerNameByUri" parameterType="string" resultType="string">
+        SELECT SERVER_NAME
+        from T_BASE_SERVER
+        WHERE URI = #{uri}
+    </select>
+
+    <select id="getServerListByUri" parameterType="string" resultMap="map">
+        SELECT *
+        FROM T_BASE_SERVER
+        WHERE SERVER_NAME = (
+            select SERVER_NAME from T_BASE_SERVER WHERE URI = #{uri}
+        )
+    </select>
+
+    <select id="findList" parameterType="map" resultMap="map">
+        SELECT *
+        FROM T_BASE_SERVER
+    </select>
 </mapper>

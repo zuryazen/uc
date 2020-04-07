@@ -3,27 +3,72 @@
 <mapper namespace="com.tech.uc.mapper.ResourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.Resource">
+    <resultMap id="map" type="com.tech.uc.entity.Resource">
         <id column="ID" property="id" />
-        <result column="NAME" property="name" />
-        <result column="PID" property="pid" />
-        <result column="TYPE" property="type" />
-        <result column="URI" property="uri" />
-        <result column="PERMISSION" property="permission" />
-        <result column="ENABLED" property="enabled" />
-        <result column="SORT" property="sort" />
-        <result column="REMARKS" property="remarks" />
-        <result column="PROJECT_NO" property="projectNo" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
+
+    <insert id="insertRoleResource" parameterType="com.tech.uc.entity.Resource">
+        INSERT INTO t_base_role_resource (role_id, resource_id)
+        select (select id from t_base_role where code = '101'), #{id} from dual
+        WHERE NOT EXISTS (select * from t_base_role_resource where role_id=(select id from t_base_role where code = '101') and resource_id = #{id})
+    </insert>
+
+    <select id="findByRoleId" resultMap="map" parameterType="map">
+        SELECT
+            id,
+            name,
+            pId,
+            type,
+            uri,
+            permission,
+            enabled,
+            PROJECT_NO,
+            sort,
+            icon,
+            remarks
+        FROM t_base_resource a
+            JOIN t_base_role_resource b ON a.id = b.resource_id
+        WHERE b.role_id = #{roleId}
+        AND a.ENABLED = 1
+        ORDER BY a.sort
+    </select>
+
+    <select id="findList" parameterType="map" resultMap="map">
+        SELECT
+        id,
+        name,
+        pId,
+        type,
+        uri,
+        permission,
+        enabled,
+        PROJECT_NO,
+        sort,
+        icon,
+        remarks
+        FROM T_BASE_RESOURCE
+
+        WHERE name like '%' || #{name} || '%'
+
+        ORDER BY SORT
+    </select>
+
+    <select id="findAll" resultMap="map">
+        SELECT
+            id,
+            name,
+            pId,
+            type,
+            uri,
+            permission,
+            enabled,
+            PROJECT_NO,
+            sort,
+            icon,
+            remarks
+        FROM t_base_resource
+    </select>
+
+
 
 </mapper>

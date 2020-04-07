@@ -3,25 +3,85 @@
 <mapper namespace="com.tech.uc.mapper.DictItemMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.DictItem">
+    <resultMap id="map" type="com.tech.uc.entity.DictItem">
         <id column="ID" property="id" />
-        <result column="GROUP_ID" property="groupId" />
-        <result column="KEY" property="key" />
-        <result column="NAME" property="name" />
-        <result column="VALUE" property="value" />
-        <result column="PID" property="pid" />
-        <result column="DESCRIPTION" property="description" />
-        <result column="SORT" property="sort" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
     </resultMap>
 
+    <select id="getItemsByGroupKey" parameterType="string" resultMap="map">
+        SELECT a.*
+        FROM t_base_dict_item a
+            JOIN t_base_dict_group b ON a.group_id = b.id
+
+        WHERE b.key = #{groupKey}
+        AND a.DELETE_FLAG = 0
+        AND b.DELETE_FLAG = 0
+
+        ORDER BY a.sort
+    </select>
+
+    <select id="getItemsByGroupId" parameterType="string" resultMap="map">
+        SELECT a.*
+        FROM t_base_dict_item a
+        JOIN t_base_dict_group b ON a.group_id = b.id
+
+        WHERE b.id = #{groupId}
+        AND a.DELETE_FLAG = 0
+        AND b.DELETE_FLAG = 0
+
+        ORDER BY a.sort
+    </select>
+
+    <select id="getUniqueItem" resultMap="map">
+        SELECT a.*
+        FROM t_base_dict_item a
+            JOIN t_base_dict_group b ON a.group_id = b.id
+
+        WHERE b.key = #{groupKey}
+          AND a.key = #{itemKey}
+          AND a.DELETE_FLAG = 0
+          AND b.DELETE_FLAG = 0
+    </select>
+
+    <select id="getItemByGroupKeyAndValue" resultMap="map">
+        SELECT a.*
+        FROM t_base_dict_item a
+        JOIN t_base_dict_group b ON a.group_id = b.id
+
+        WHERE b.key = #{groupKey}
+        AND a.value = #{value}
+        AND a.DELETE_FLAG = 0
+        AND b.DELETE_FLAG = 0
+
+        ORDER BY a.SORT
+    </select>
+
+    <select id="getItemsByGroupKeyAndPId" resultMap="map">
+        SELECT a.*
+        FROM t_base_dict_item a
+        JOIN t_base_dict_group b ON a.group_id = b.id
+
+        WHERE b.key = #{groupKey}
+        AND a.pId = #{pId}
+        AND a.DELETE_FLAG = 0
+        AND b.DELETE_FLAG = 0
+
+        ORDER BY a.SORT
+    </select>
+
+    <select id="findItemsByGroupKeys" resultMap="map">
+        SELECT item.* FROM T_BASE_DICT_GROUP dict, T_BASE_DICT_ITEM item
+        WHERE dict.key IN
+        <foreach collection="keys" item="key" index="index" open="(" close=")" separator=",">
+            #{key}
+        </foreach>
+        AND dict.ID = item.GROUP_ID
+        AND dict.DELETE_FLAG = 0
+        AND item.DELETE_FLAG = 0
+    </select>
+
+    <select id="findPItemsById" parameterType="string" resultMap="map">
+        SELECT * FROM T_BASE_DICT_ITEM A
+          WHERE  1 = 1 AND DELETE_FLAG = 0
+        START WITH A.id = #{id} connect BY A.VALUE = prior A.pid ORDER BY LEVEL, A.sort
+    </select>
 </mapper>

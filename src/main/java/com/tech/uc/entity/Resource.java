@@ -1,11 +1,13 @@
 package com.tech.uc.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -59,7 +61,8 @@ public class Resource extends Model<Resource> {
     // 图标名称
     private String icon;
 
-
+    // 子菜单集合
+    private List<Resource> childrens = new ArrayList<>();
 
 
 

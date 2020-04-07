@@ -3,17 +3,16 @@
 <mapper namespace="com.tech.uc.mapper.ScheduleJobMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.ScheduleJob">
+    <resultMap id="map" type="com.tech.uc.entity.ScheduleJob">
         <id column="ID" property="id" />
-        <result column="JOB_NAME" property="jobName" />
-        <result column="JOB_GROUP" property="jobGroup" />
-        <result column="JOB_STATUS" property="jobStatus" />
-        <result column="IS_CONCURRENT" property="isConcurrent" />
-        <result column="CRON_EXPRESSION" property="cronExpression" />
-        <result column="BEAN_CLASS" property="beanClass" />
-        <result column="METHOD_NAME" property="methodName" />
-        <result column="SPRING_BEAN" property="springBean" />
-        <result column="DESCRIPTION" property="description" />
     </resultMap>
 
+    <select id="findList" parameterType="map" resultMap="map">
+        SELECT *
+        FROM T_BASE_SCHEDULE_JOB
+
+        <if test="jobName != null and jobName != ''">
+            WHERE job_name like '%' || #{jobName} || '%'
+        </if>
+    </select>
 </mapper>

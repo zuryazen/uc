@@ -3,70 +3,119 @@
 <mapper namespace="com.tech.uc.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.tech.uc.entity.User">
+    <resultMap id="map" type="com.tech.uc.entity.User">
         <id column="ID" property="id" />
-        <result column="USERNAME" property="username" />
-        <result column="PASSWORD" property="password" />
-        <result column="SALT" property="salt" />
-        <result column="FULL_NAME" property="fullName" />
-        <result column="BIRTHDAY" property="birthday" />
-        <result column="SEX" property="sex" />
-        <result column="ICON" property="icon" />
-        <result column="EMAIL" property="email" />
-        <result column="PHONE" property="phone" />
-        <result column="ADDRESS" property="address" />
-        <result column="STATUS" property="status" />
-        <result column="SORT" property="sort" />
-        <result column="REMARKS" property="remarks" />
-        <result column="CREATE_TIME" property="createTime" />
-        <result column="CREATE_USER_NAME" property="createUserName" />
-        <result column="UPDATE_TIME" property="updateTime" />
-        <result column="UPDATE_USER_NAME" property="updateUserName" />
-        <result column="DELETE_TIME" property="deleteTime" />
-        <result column="DELETE_USER_NAME" property="deleteUserName" />
-        <result column="CREATE_USER" property="createUser" />
-        <result column="UPDATE_USER" property="updateUser" />
-        <result column="DELETE_USER" property="deleteUser" />
-        <result column="DELETE_FLAG" property="deleteFlag" />
+        <collection property="orgList" column="id" select="com.tech.uc.mapper.OrgMapper.getOrgListByUserId" />
+        <collection property="roleList" column="id" select="com.tech.uc.mapper.RoleMapper.findListByUserId" />
     </resultMap>
 
-    <select id="findAllUser" resultType="com.tech.uc.entity.User">
-        select * from user
+    <select id="findByUsername" parameterType="string" resultMap="map">
+        SELECT
+            id,
+            username,
+            password,
+            salt,
+            full_name,
+            birthday,
+            sex,
+            icon,
+            email,
+            phone,
+            address,
+            status,
+            sort,
+            district,
+            remarks
+        FROM t_base_user
+        WHERE username = #{username}
     </select>
 
-    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.tech.uc.entity.User">
-        select * from user where id = #{id}
+    <select id="findByOrgId" parameterType="string" resultMap="map">
+        SELECT a.*
+        FROM t_base_user a
+            JOIN t_base_org_user b ON a.id = b.user_id
+            JOIN t_base_org c ON c.id = b.org_id
+
+        WHERE c.id = #{orgId}
     </select>
 
-    <select id="countAllUser" resultType="java.lang.Integer">
-        select count(id) from user
+    <select id="findByCondition" parameterType="map" resultMap="map">
+        SELECT a.*
+        FROM t_base_user a
+        JOIN t_base_org_user b ON a.id = b.user_id
+        JOIN t_base_org c ON c.id = b.org_id
+
+        WHERE c.id = #{orgId}
+        <if test="username!=''">
+
+            and a.username like CONCAT(CONCAT('%', #{username}), '%')
+
+        </if>
+        <if test="fullName!=''">
+
+            and a.FULL_NAME like CONCAT(CONCAT('%', #{fullName}), '%')
+
+        </if>
     </select>
 
-    <delete id="deleteUserById">
-        delete from user where id = #{id}
+    <select id="findByRoleId" parameterType="string" resultMap="map">
+        SELECT a.*
+        FROM t_base_user a
+            JOIN t_base_user_role b ON a.id = b.user_id
+            JOIN t_base_role c ON c.id = b.role_id
+
+        WHERE c.id = #{roleId}
+    </select>
+
+    <delete id="deleteUserOrgList" parameterType="string">
+        DELETE FROM t_base_org_user
+        WHERE user_id = #{userId}
     </delete>
 
-    <update id="updateUserById" parameterType="com.tech.uc.entity.User">
-        update user
-        <set>
-            <if test="username != null">username = #{username},</if>
-            <if test="password != null">password = #{password},</if>
-            <if test="address != null">address = #{address},</if>
-            <if test="email != null">email = #{email},</if>
-        </set>
-        where
-        id = #{id}
-    </update>
+    <delete id="deleteUserRoleList" parameterType="string">
+        DELETE FROM t_base_user_role
+        WHERE user_id = #{userId}
+    </delete>
 
-    <update id="updateUserStatusById">
-        update user
-        <set>
-            <if test="status != null">status = #{status}</if>
-        </set>
-        where
-        id = #{id}
-    </update>
+    <insert id="insertUserOrgList">
+        insert into T_BASE_ORG_USER (ORG_ID, USER_ID)
 
+        SELECT A.* FROM (
+        <foreach collection="orgList" item="item" index="index" open="" close="" separator="UNION ALL">
+            SELECT
+            #{item.id} ORG_ID,
+            #{userId} USER_ID
+            FROM DUAL
+        </foreach>
+        ) A
+
+    </insert>
+
+    <insert id="insertUserRoleList">
+        insert into T_BASE_USER_ROLE (ROLE_ID, USER_ID)
+        SELECT A.* FROM (
+        <foreach collection="roleList" item="item" index="index" open="" close="" separator="UNION ALL">
+            SELECT
+            #{item.id} ROLE_ID,
+            #{userId} USER_ID
+            FROM DUAL
+        </foreach>
+        ) A
+
+    </insert>
+
+
+    <select id="findByOrgIdAndRoleCode" resultMap="map">
+        SELECT a.*
+        FROM t_base_user a
+            JOIN t_base_org_user b ON a.id = b.user_id
+            JOIN t_base_org c ON c.id = b.org_id
+            JOIN t_base_user_role d ON a.id = d.user_id
+            JOIN t_base_role e ON e.id = d.role_id
+
+        WHERE c.id = #{orgId}
+        AND e.CODE = #{roleCode}
+    </select>
 
 
 
