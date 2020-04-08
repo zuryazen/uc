@@ -33,9 +33,9 @@ public class AdminUserApplicationTests {
     @Test
     public void test1() {
 
-        User root = userService.findByUsername("root", "http://127.0.0.1:8080");
+//        User root = userService.findByUsername("root", "http://127.0.0.1:8080");
 
-
+        System.out.println(System.getProperty("user.dir"));
 
     }
 

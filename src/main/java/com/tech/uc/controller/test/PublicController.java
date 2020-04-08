@@ -4,12 +4,15 @@ import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
 import com.tech.uc.common.utils.ResponseEntity;
+import com.tech.uc.entity.User;
+import com.tech.uc.service.UserService;
 import com.tech.uc.vo.UserVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/pub")
 public class PublicController {
+
+    @Autowired
+    UserService userService;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
 
@@ -64,8 +71,14 @@ public class PublicController {
         Map<String, Object> info = new HashMap<>();
         try {
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userVO.getUsername(), userVO.getPassword());
+            String requestURL = request.getRequestURL().toString();
+            String requestURI = request.getRequestURI();
+            requestURL = requestURL.replaceAll(requestURI, "");
+            String localAddr = request.getLocalAddr();
+            subject.getSession().setAttribute("baseURL", requestURL);
             subject.login(usernamePasswordToken);
             info.put("sessionId", subject.getSession().getId());
+            info.put("menus", subject.getSession().getAttribute("menus"));
             return ResponseEntity.buildSuccess(info, "登录成功");
         }catch (UserNotFoundException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);
@@ -82,9 +95,6 @@ public class PublicController {
         }
 
     }
-
-
-
 
 
 

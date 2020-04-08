@@ -79,14 +79,9 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<User> updateUserById(@RequestBody User user) {
         ResponseEntity<User> responseEntity = new ResponseEntity<>();
-//        Integer state = userService.updateUserById(user);
-//        User userById = userService.findUserById(user.getId());
-//        if (state == 1) {
-//            return ResponseEntity.buildSuccess(userById, "update ok");
-//        } else {
-//            return  ResponseEntity.buildError(userById, 602, "update error");
-//        }
-        return null;
+        boolean b = userService.updateById(user);
+        return b ? ResponseEntity.buildSuccess(user, "update ok")
+                : ResponseEntity.buildError(user, 602, "update error");
     }
 
     /**
@@ -95,19 +90,15 @@ public class UserController {
      * @param open
      * @return
      */
-    @PutMapping("/updateOpen/{id}/{open}")
-    public ResponseEntity<Integer> updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("open") boolean open) {
+    @PutMapping("/updateOpen/{id}/{status}")
+    public ResponseEntity<Integer> updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
-//        Integer state = userService.updateUserOpenById(id, open);
-//        if (state == 1) {
-//            return ResponseEntity.buildSuccess(state, "update open ok");
-//        } else {
-//            return ResponseEntity.buildError(state, 603, "update open error");
-//        }
-        return null;
+        User user = userService.selectById(id);
+        user.setStatus(status);
+        boolean b = userService.updateById(user);
+        return b ? ResponseEntity.buildSuccess(1, "update ok")
+                : ResponseEntity.buildError(-1, "update error");
     }
-
-
 
 
 }
