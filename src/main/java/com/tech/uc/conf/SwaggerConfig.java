@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * @author zhuyz
  * @date 2020/4/8 0008 21:50
- * @description
+ * @description swagger配置类
  */
 @Configuration
 @EnableSwagger2
@@ -21,7 +21,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("API接口文档")
-                .description("用户信息管理")
+                .description("uc api")
                 .version("1.0.0")
                 .build();
     }
@@ -31,7 +31,6 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.tech.uc.controller")) //这里写的是API接口所在的包位置
-
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -31,7 +31,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/pub")
-@Api("公共信息controller")
 public class PublicController {
 
     @Autowired
@@ -70,8 +69,7 @@ public class PublicController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation(value = "用户登录")
-    public ResponseEntity login(@ApiParam(value = "login", required = true) @RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity login( @RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
         Map<String, Object> info = new HashMap<>();
         try {
