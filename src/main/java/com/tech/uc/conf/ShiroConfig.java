@@ -65,6 +65,12 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/user/**", "anon");
 
+        // swagger放行
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+
         filterChainDefinitionMap.put("/logout", "logout");
         // 匿名可访问路径
         filterChainDefinitionMap.put("/pub/**", "anon");

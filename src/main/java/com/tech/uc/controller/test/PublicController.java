@@ -7,6 +7,9 @@ import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
 import com.tech.uc.vo.UserVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -28,6 +31,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/pub")
+@Api("公共信息controller")
 public class PublicController {
 
     @Autowired
@@ -66,7 +70,8 @@ public class PublicController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
+    @ApiOperation(value = "用户登录")
+    public ResponseEntity login(@ApiParam(value = "login", required = true) @RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
         Map<String, Object> info = new HashMap<>();
         try {
