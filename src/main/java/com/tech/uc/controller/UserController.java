@@ -2,13 +2,17 @@ package com.tech.uc.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisClient redisClient;
 
     /**
      * 分页查询用户列表
@@ -87,7 +94,7 @@ public class UserController {
     /**
      * 根据用户id更新用户
      * @param id
-     * @param open
+     * @param status
      * @return
      */
     @PutMapping("/updateOpen/{id}/{status}")
@@ -98,6 +105,24 @@ public class UserController {
         boolean b = userService.updateById(user);
         return b ? ResponseEntity.buildSuccess(1, "update ok")
                 : ResponseEntity.buildError(-1, "update error");
+    }
+
+
+    /**
+     * 获取当前用户所拥有的资源列表
+     * @author yanyj
+     * @date 2018/12/07
+     * @return
+     */
+    @PostMapping("/curMenus")
+    public ResponseEntity getCurrentUserResourcesTree() {
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+        Map<Object, Object> hmget = redisClient.hmget("user");
+        String username = user.getUsername();
+        if (hmget != null && hmget.size() > 0 && hmget.get(username) != null) {
+            user = (User) hmget.get(username);
+        }
+        return user == null ? ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(user.getMenus());
     }
 
 

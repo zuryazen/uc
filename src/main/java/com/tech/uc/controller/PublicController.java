@@ -1,15 +1,11 @@
-package com.tech.uc.controller.test;
+package com.tech.uc.controller;
 
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
 import com.tech.uc.common.utils.ResponseEntity;
-import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
 import com.tech.uc.vo.UserVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -77,7 +73,6 @@ public class PublicController {
             String requestURL = request.getRequestURL().toString();
             String requestURI = request.getRequestURI();
             requestURL = requestURL.replaceAll(requestURI, "");
-            String localAddr = request.getLocalAddr();
             subject.getSession().setAttribute("baseURL", requestURL);
             subject.login(usernamePasswordToken);
             info.put("sessionId", subject.getSession().getId());
