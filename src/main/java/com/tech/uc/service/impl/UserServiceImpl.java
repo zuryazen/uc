@@ -1,6 +1,8 @@
 package com.tech.uc.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.exception.ServiceException;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
@@ -131,6 +133,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return null;
     }
 
+    @Override
+    public PageInfo<User> findAllUserByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> users = userMapper.selectList(new EntityWrapper<User>());
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
+        return userPageInfo;
+    }
 
     public static List<Resource> list2tree(List<Resource> list){
         Map<String, Resource> map = new HashMap<>();

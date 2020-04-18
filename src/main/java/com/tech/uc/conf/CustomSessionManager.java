@@ -8,6 +8,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.Serializable;
 
+import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
+import static com.tech.uc.common.constant.Constant.Auth.REFERENCED_SESSION_ID_SOURCE;
+
 /**
  * @author zhuyz
  * @date 2020/4/2 0002 21:32
@@ -15,11 +18,14 @@ import java.io.Serializable;
  */
 public class CustomSessionManager extends DefaultWebSessionManager {
 
-    private static final String AUTHORIZATION = "token";
 
     public CustomSessionManager() {
         super();
     }
+
+
+
+
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
@@ -27,7 +33,7 @@ public class CustomSessionManager extends DefaultWebSessionManager {
 
          if (sessionId != null) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
-                    ShiroHttpServletRequest.COOKIE_SESSION_ID_SOURCE);
+                    REFERENCED_SESSION_ID_SOURCE);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
             //automatically mark it valid here.  If it is invalid, the
             //onUnknownSession method below will be invoked and we'll remove the attribute at that time.

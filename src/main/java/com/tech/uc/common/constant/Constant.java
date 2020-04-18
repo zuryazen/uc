@@ -25,8 +25,18 @@ public class Constant {
         public static final Integer INTERNAL_SERVER_ERROR = 500;
         // 服务器当前不能处理客户端的请求
         public static final Integer SERVER_UNAVAILABLE = 503;
-
+        // 用户失效
+        public static final Integer USER_INVALID = 601;
+        // 未登录
+        public static final Integer NO_LOGIN = 602;
     }
+
+    public static class Auth {
+        public static final String AUTHORIZATION = "Authorization";
+        public static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
+    }
+
+
 
 
 }

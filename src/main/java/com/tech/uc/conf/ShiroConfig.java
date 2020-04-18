@@ -6,16 +6,21 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -50,10 +55,10 @@ public class ShiroConfig {
         // 需要登录的接口，如果需要访问某个接口，如果没有登录，则会跳转到此接口(如果不是前后端分离，则跳转页面)
         shiroFilterFactoryBean.setLoginUrl("/pub/need_login");
         // 设置登录成功的跳转页面，如果前后端分离则无此选项
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+//        shiroFilterFactoryBean.setSuccessUrl("/index");
 
-        // 没有权限访问时 跳转的页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/pub/not_permit");
+        // 没有权限访问时 跳转的页面，如果前后端分离则无此选项
+//        shiroFilterFactoryBean.setUnauthorizedUrl("/pub/not_permit");
 
         // 设置自定义filter
         Map<String, Filter> filterMap = new LinkedHashMap<>();
@@ -63,29 +68,33 @@ public class ShiroConfig {
         // 拦截器路径，注意：一定是LinkedHashMap，因为它是有序的
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
-        filterChainDefinitionMap.put("/user/**", "anon");
 
+        filterChainDefinitionMap.put("/", "anon");
         // swagger放行
-        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-        filterChainDefinitionMap.put("/v2/**", "anon");
-        filterChainDefinitionMap.put("/webjars/**", "anon");
+//        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+//        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+//        filterChainDefinitionMap.put("/v2/**", "anon");
+//        filterChainDefinitionMap.put("/webjars/**", "anon");
+//        filterChainDefinitionMap.put("/configuration/security", "anon");
+//        filterChainDefinitionMap.put("/configuration/ui", "anon");
 
-        filterChainDefinitionMap.put("/logout", "logout");
+//        filterChainDefinitionMap.put("/logout", "logout");
         // 匿名可访问路径
-        filterChainDefinitionMap.put("/pub/**", "anon");
-        // 登录用户才可以访问的
-        filterChainDefinitionMap.put("/authc/**", "authc");
-
-        // admin权限可访问
-        filterChainDefinitionMap.put("/admin/**", "roleOrFilter[admin, root]");
-
-        // editor权限可访问
-        filterChainDefinitionMap.put("/video/update", "perms[video_update]");
-
-        // authc：url定义必须通过认证才可以访问
-        // anon： url可以匿名访问
-        filterChainDefinitionMap.put("/**", "authc");
+//        filterChainDefinitionMap.put("/pub/**", "anon");
+//        filterChainDefinitionMap.put("/user/**", "anon");
+//
+//        // 登录用户才可以访问的
+//        filterChainDefinitionMap.put("/authc/**", "authc");
+//
+//        // admin权限可访问
+//        filterChainDefinitionMap.put("/admin/**", "roleOrFilter[admin, root]");
+//
+//        // editor权限可访问
+//        filterChainDefinitionMap.put("/video/update", "perms[video_update]");
+//
+//        // authc：url定义必须通过认证才可以访问
+//        // anon： url可以匿名访问
+//        filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
@@ -100,7 +109,7 @@ public class ShiroConfig {
         securityManager.setSessionManager(sessionManager());
 
         // 使用自定义cacheManager
-        securityManager.setCacheManager(cacheManager());
+        securityManager.setCacheManager(redisCacheManager());
 
         // 设置realm(推荐放到最后，不然某些情况不会生效)
         securityManager.setRealm(customRealm());
@@ -142,12 +151,14 @@ public class ShiroConfig {
     @Bean
     public SessionManager sessionManager() {
         CustomSessionManager customSessionManager = new CustomSessionManager();
-        // 超时时间，默认：30min，会话超时；传参为秒
-//        customSessionManager.setGlobalSessionTimeout(20 * 1000 * 60);
-
-        // 配置session持久化
+        //取消登陆跳转URL后面的jsessionid参数
+//        customSessionManager.setSessionIdUrlRewritingEnabled(false);
+        // 1.超时时间，默认：30min，会话超时；传参为秒
+         customSessionManager.setGlobalSessionTimeout(60 * 30);
+        // 2.配置session持久化
         customSessionManager.setSessionDAO(redisSessionDAO());
-
+        // 3.此项一定要放在2的后面才会生效
+        customSessionManager.setSessionIdCookie(simpleCookie());
         return customSessionManager;
     }
 
@@ -168,18 +179,20 @@ public class ShiroConfig {
      * 配置具体cache实现类(redisCacheManager)
      * @return
      */
-    public CacheManager cacheManager() {
+    @Bean
+    public RedisCacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         // 设置过期时间，单位是秒
-        redisCacheManager.setExpire(20);
+        redisCacheManager.setExpire(60 * 30);
         return redisCacheManager;
     }
 
     /**
-     * 自定义session持久化
+     * 使用的是shiro-redis开源插件 session持久化
      * @return
      */
+    @Bean
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
@@ -192,11 +205,42 @@ public class ShiroConfig {
      * 自定义sessionId生成策略
      * @return
      */
+    @Bean
     public SessionIdGenerator sessionIdGenerator() {
         return new CustomSesisonIdGenerator();
     }
 
+    @Bean
+    public SimpleCookie simpleCookie() {
+        // cookie的name,对应的默认是 JSESSIONID
+        SimpleCookie cookie = new SimpleCookie("SHARE_JSESSIONID");
+        cookie.setHttpOnly(true);
+        //  path为 / 用于多个系统共享 JSESSIONID
+        cookie.setPath("/");
+        return cookie;
+    }
 
+
+
+    /**
+     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),
+     * 需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和
+     * AuthorizationAttributeSourceAdvisor)即可实现此功能
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        advisorAutoProxyCreator.setProxyTargetClass(true);
+        return advisorAutoProxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
 
 
 

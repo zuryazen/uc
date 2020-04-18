@@ -1,5 +1,8 @@
 package com.tech.uc.controller;
 
+import com.tech.uc.common.utils.ResponseEntity;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogoutController {
 
 
-    // shiroConfig中配置了logout过滤器，这里可以不用配置
-//    @GetMapping("/logout")
-//    public ResponseEntity logout() {
-//        SecurityUtils.getSubject().logout();
-//        return ResponseEntity.buildSuccess("退出登录成功");
-//    }
+//    // shiroConfig中配置了logout过滤器，这里可以不用配置
+    @GetMapping("/logout")
+    public ResponseEntity logout() {
+        SecurityUtils.getSubject().logout();
+        return ResponseEntity.buildSuccess("退出登录成功");
+    }
 
 }

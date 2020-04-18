@@ -63,7 +63,7 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("登录认证----doGetAuthenticationInfo");
         String username = (String)token.getPrincipal();
-        String baseURL = SecurityUtils.getSubject().getSession().getAttribute("baseURL").toString();
+        String baseURL = redisClient.get("baseURL").toString();
         User user = null;
         // 把用户信息放置在缓存中，减小数据库压力,**安全问题：用户已经重新登录，之前缓存的用户信息应当删除
         // 采用user ---> map<username, user> 缓存用户信息
@@ -76,9 +76,13 @@ public class CustomRealm extends AuthorizingRealm {
             map.put(username, user);
             redisClient.hmset("user", map);
         }
-        SecurityUtils.getSubject().getSession().setAttribute("menus", user.getMenus());
+        redisClient.set("menus", user.getMenus());
         if (user == null) {
             throw new UserNotFoundException("用户不存在");
+        }
+        // 账户冻结
+        if (user.getStatus() == 0) {
+            throw new LockedAccountException();
         }
         return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
     }

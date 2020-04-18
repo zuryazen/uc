@@ -1,6 +1,7 @@
 package com.tech.uc.controller;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
@@ -26,8 +27,6 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-
-
     @Autowired
     private UserService userService;
 
@@ -43,21 +42,19 @@ public class UserController {
     @GetMapping("/findAll/{pageNum}/{pageSize}")
     public ResponseEntity<PageInfo<User>> findAllUser(@PathVariable("pageNum") Integer pageNum,
                                                       @PathVariable("pageSize") Integer pageSize, HttpServletRequest request) {
-//        PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
-//        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
-        return null;
+        PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
+        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
     }
 
     @GetMapping("/findUser/{id}")
     public ResponseEntity findUserById(@PathVariable("id") Integer id) {
         ResponseEntity responseEntity = new ResponseEntity<>();
-//        User userById = userService.findUserById(id);
-//        if (userById != null) {
-//            return ResponseEntity.buildSuccess(userById);
-//        } else {
-//            return ResponseEntity.buildCustom("user not found", 604);
-//        }
-        return null;
+        User userById = userService.selectById(id);
+        if (userById != null) {
+            return ResponseEntity.buildSuccess(userById);
+        } else {
+            return ResponseEntity.buildCustom("user not found", 604);
+        }
     }
 
     /**
@@ -68,14 +65,13 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Integer> deleteUserById(@PathVariable("id") Integer id) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
-//        Integer state = userService.deleteUserById(id);
-//        if (state == 1) {
-//            Integer pageTotal = userService.countAllUser();
-//            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
-//        } else {
-//            return ResponseEntity.buildCustom(null, 601, "delete error");
-//        }
-        return null;
+        boolean state = userService.deleteById(id);
+        if (state) {
+            Integer pageTotal = userService.selectCount(new EntityWrapper<>());
+            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
+        } else {
+            return ResponseEntity.buildCustom(null, 601, "delete error");
+        }
     }
 
     /**
@@ -97,7 +93,7 @@ public class UserController {
      * @param status
      * @return
      */
-    @PutMapping("/updateOpen/{id}/{status}")
+    @PutMapping("/updateStatus/{id}/{status}")
     public ResponseEntity<Integer> updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
         ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
         User user = userService.selectById(id);
@@ -110,7 +106,7 @@ public class UserController {
 
     /**
      * 获取当前用户所拥有的资源列表
-     * @author yanyj
+     * WebUtils.toHttp(((HttpServletRequest)((WebDelegatingSubject)SecurityUtils.getSubject()).servletRequest)   ).getHeader("token")
      * @date 2018/12/07
      * @return
      */

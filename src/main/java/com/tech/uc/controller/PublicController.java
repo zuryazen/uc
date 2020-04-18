@@ -3,22 +3,29 @@ package com.tech.uc.controller;
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.service.UserService;
 import com.tech.uc.vo.UserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
+import static com.tech.uc.common.constant.Constant.StatusCode.*;
 
 /**
  * @author zhuyz
@@ -30,14 +37,18 @@ import java.util.Map;
 public class PublicController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private RedisClient redisClient;
+
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
 
     @GetMapping("/need_login")
     public ResponseEntity needLogin() {
-        return ResponseEntity.buildSuccess("温馨提示：请使用对应的账号登录");
+        return ResponseEntity.buildCustom("温馨提示，未登录，请先登录", NO_LOGIN);
     }
 
     @GetMapping("/not_permit")
@@ -65,7 +76,7 @@ public class PublicController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity login( @RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity login(@RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
         Map<String, Object> info = new HashMap<>();
         try {
@@ -73,10 +84,20 @@ public class PublicController {
             String requestURL = request.getRequestURL().toString();
             String requestURI = request.getRequestURI();
             requestURL = requestURL.replaceAll(requestURI, "");
-            subject.getSession().setAttribute("baseURL", requestURL);
+            Object baseURL = redisClient.get("baseURL");
+            if (baseURL == null) {
+                redisClient.set("baseURL", requestURL);
+            }
+
             subject.login(usernamePasswordToken);
-            info.put("sessionId", subject.getSession().getId());
-            info.put("menus", subject.getSession().getAttribute("menus"));
+
+            String sessionId = subject.getSession().getId().toString();
+            // 把sessionId存储在缓存中，后台重启，用户无感知
+            if (redisClient.get(userVO.getUsername() + AUTHORIZATION) == null) {
+                redisClient.set(userVO.getUsername() + AUTHORIZATION, sessionId);
+            }
+            info.put("sessionId", redisClient.get(userVO.getUsername() + AUTHORIZATION));
+            info.put("menus", redisClient.get("menus"));
             return ResponseEntity.buildSuccess(info, "登录成功");
         }catch (UserNotFoundException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);
@@ -91,6 +112,26 @@ public class PublicController {
             LOGGER.error(userVO.getUsername() + "登录失败，未知错误", e);
             return ResponseEntity.buildError(e.getMessage());
         }
+
+    }
+
+
+    @GetMapping("/checkToken")
+    public ResponseEntity checkToken() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject == null) {
+            return ResponseEntity.buildCustom("USER_INVALID", USER_INVALID);
+        }
+
+//        if (redisClient.get() > 0) {
+//            return ResponseEntity.buildCustom("USER_NO_INVALID", OK);
+//        }
+
+
+
+        return null;
+
+
 
     }
 

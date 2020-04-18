@@ -1,6 +1,8 @@
 # port
 server:
   port: 8080
+  servlet:
+    context-path: '/api'
 
 
 
@@ -49,10 +51,10 @@ spring:
 
   # redis properties
   redis:
-    host: 127.0.0.1
+    host: localhost
     port: 6379
     jedis:
       pool:
         min-idle: 50
         max-active: 20
-        max-wait: 5000
+        max-wait: 500000

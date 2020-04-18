@@ -83,4 +83,7 @@ public interface UserService extends IService<User> {
      * @return
      */
     Map<String, Object> findByUsernameAndPassword(String username, String password);
+
+    PageInfo<User> findAllUserByPage(int pageNum, int pageSize);
+
 }
