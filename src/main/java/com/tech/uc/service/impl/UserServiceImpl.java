@@ -136,7 +136,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public PageInfo<User> findAllUserByPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> users = userMapper.selectList(new EntityWrapper<User>());
+        List<User> users;
+        users = userMapper.findAllUser();
         PageInfo<User> userPageInfo = new PageInfo<>(users);
         return userPageInfo;
     }

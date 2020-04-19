@@ -9,6 +9,10 @@
         <collection property="roleList" column="id" select="com.tech.uc.mapper.RoleMapper.findListByUserId" />
     </resultMap>
 
+    <select id="findAllUser" resultMap="map">
+        select * from t_base_user
+    </select>
+
     <select id="findByUsername" parameterType="string" resultMap="map">
         SELECT
             id,

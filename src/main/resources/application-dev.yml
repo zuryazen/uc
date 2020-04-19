@@ -8,10 +8,20 @@ server:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.zhuyz.adminuser.entity
+  type-aliases-package: com.tech.uc.entity
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+mybatis-plus:
+  type-aliases-package: com.tech.uc.entity
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+#pageHelper
+pagehelper:
+  helper-dialect: oracle
+  reasonable: true
+  support-methods-arguments: true
 
 # write log
 logging:
@@ -58,3 +68,4 @@ spring:
         min-idle: 50
         max-active: 20
         max-wait: 500000
+

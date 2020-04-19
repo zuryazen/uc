@@ -13,8 +13,10 @@ import java.util.UUID;
  */
 public class CustomSesisonIdGenerator implements SessionIdGenerator {
 
+    private static final String IDENTIFICATION = "UC";
+
     @Override
     public Serializable generateId(Session session) {
-        return "zhuyz" + UUID.randomUUID().toString().replaceAll("-", "");
+        return IDENTIFICATION + UUID.randomUUID().toString().replaceAll("-", "");
     }
 }

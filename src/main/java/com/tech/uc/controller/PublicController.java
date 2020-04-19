@@ -3,6 +3,11 @@ package com.tech.uc.controller;
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
+import com.tech.uc.common.utils.UserContextUtil;
+import com.tech.uc.conf.CustomSessionManager;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.subject.support.WebDelegatingSubject;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
@@ -42,6 +47,8 @@ public class PublicController {
     @Autowired
     private RedisClient redisClient;
 
+    @Autowired
+    private RedisSessionDAO redisSessionDAO;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
@@ -80,24 +87,15 @@ public class PublicController {
         Subject subject = SecurityUtils.getSubject();
         Map<String, Object> info = new HashMap<>();
         try {
-            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userVO.getUsername(), userVO.getPassword());
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userVO.getUsername(),
+                    userVO.getPassword());
             String requestURL = request.getRequestURL().toString();
             String requestURI = request.getRequestURI();
             requestURL = requestURL.replaceAll(requestURI, "");
-            Object baseURL = redisClient.get("baseURL");
-            if (baseURL == null) {
-                redisClient.set("baseURL", requestURL);
-            }
-
+            UserContextUtil.setCurrentBaseURL(requestURL);
             subject.login(usernamePasswordToken);
-
-            String sessionId = subject.getSession().getId().toString();
-            // 把sessionId存储在缓存中，后台重启，用户无感知
-            if (redisClient.get(userVO.getUsername() + AUTHORIZATION) == null) {
-                redisClient.set(userVO.getUsername() + AUTHORIZATION, sessionId);
-            }
-            info.put("sessionId", redisClient.get(userVO.getUsername() + AUTHORIZATION));
-            info.put("menus", redisClient.get("menus"));
+            info.put("sessionId", UserContextUtil.currentSessionId());
+            info.put("menus", UserContextUtil.currentMenus());
             return ResponseEntity.buildSuccess(info, "登录成功");
         }catch (UserNotFoundException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);

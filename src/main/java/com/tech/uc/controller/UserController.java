@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
+import com.tech.uc.common.utils.UserContextUtil;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -106,19 +107,14 @@ public class UserController {
 
     /**
      * 获取当前用户所拥有的资源列表
-     * WebUtils.toHttp(((HttpServletRequest)((WebDelegatingSubject)SecurityUtils.getSubject()).servletRequest)   ).getHeader("token")
      * @date 2018/12/07
      * @return
      */
     @PostMapping("/curMenus")
     public ResponseEntity getCurrentUserResourcesTree() {
         User user = (User)SecurityUtils.getSubject().getPrincipal();
-        Map<Object, Object> hmget = redisClient.hmget("user");
-        String username = user.getUsername();
-        if (hmget != null && hmget.size() > 0 && hmget.get(username) != null) {
-            user = (User) hmget.get(username);
-        }
-        return user == null ? ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(user.getMenus());
+        return UserContextUtil.currentMenus() == null ?
+                ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(user.getMenus());
     }
 
 

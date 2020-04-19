@@ -3,6 +3,7 @@ package com.tech.uc.conf;
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.utils.RedisClient;
+import com.tech.uc.common.utils.UserContextUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class CustomMatcher extends HashedCredentialsMatcher {
 
         // 如果校验密码匹配成功，则删除redis中缓存的failkey，否则对错误次数累加，并且重新设置过期时间
         if (match) {
+            // 密码比较成功后缓存menus
             if (errorLogins != null) {
                 redisClient.del(failKey);
             }

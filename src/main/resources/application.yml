@@ -1,11 +1,3 @@
 spring:
   profiles:
     active: dev
-
-#pageHelper
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-
-

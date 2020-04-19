@@ -10,6 +10,7 @@ import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -21,8 +22,8 @@ import lombok.experimental.Accessors;
  * @since 2020-04-05
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("T_BASE_ROLE")
 public class Role extends Model<Role> {
 

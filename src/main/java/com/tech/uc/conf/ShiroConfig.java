@@ -153,12 +153,17 @@ public class ShiroConfig {
         CustomSessionManager customSessionManager = new CustomSessionManager();
         //取消登陆跳转URL后面的jsessionid参数
 //        customSessionManager.setSessionIdUrlRewritingEnabled(false);
-        // 1.超时时间，默认：30min，会话超时；传参为秒
-         customSessionManager.setGlobalSessionTimeout(60 * 30);
+        // 1.超时时间，默认：30min，会话超时；传参为毫秒
+        // 此项配置会影响SecurityUtils.getSubject().getPrincipal();
+        // 因为用户登录之后会把用户信息存储在session中
+         customSessionManager.setGlobalSessionTimeout(1000 * 60 * 30);
         // 2.配置session持久化
         customSessionManager.setSessionDAO(redisSessionDAO());
         // 3.此项一定要放在2的后面才会生效
         customSessionManager.setSessionIdCookie(simpleCookie());
+        // 按顺序
+        customSessionManager.setSessionIdCookieEnabled(true);
+        customSessionManager.setSessionIdUrlRewritingEnabled(true);
         return customSessionManager;
     }
 
@@ -195,6 +200,8 @@ public class ShiroConfig {
     @Bean
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        // 自定义redis缓存session的key名称
+        redisSessionDAO.setKeyPrefix("token:");
         redisSessionDAO.setRedisManager(redisManager());
         // 自定义sessionId生成策略
         redisSessionDAO.setSessionIdGenerator(sessionIdGenerator());

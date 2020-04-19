@@ -73,11 +73,14 @@ public class MybatisGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         //数据库表字段映射到实体类的命名策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setSuperEntityClass("com.tech.uc.entity.SuperEntity");
+        // 写于父类中的公共字段
+        strategy.setSuperEntityColumns("id");
         //实体是否为lombok模型
         strategy.setEntityLombokModel(true);
         //生成@RestController控制器
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(new String[] { "T_BASE_DICT_GROUP", "T_BASE_DICT_ITEM", "T_BASE_FILE", "T_BASE_SERVER", "T_BASE_SCHEDULE_JOB" });
+        strategy.setInclude(new String[] { "TEST" });
         //驼峰转连字符串
         strategy.setControllerMappingHyphenStyle(true);
 

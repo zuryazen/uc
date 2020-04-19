@@ -21,6 +21,9 @@ import java.util.Map;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+
+    List<User> findAllUser();
+
     /**
      * 根据用户名（登录名）获取用户信息（包含组织，角色的关联属性）
      * @param username

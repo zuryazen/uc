@@ -2,6 +2,7 @@ package com.tech.uc.conf;
 
 import com.tech.uc.common.exception.UserNotFoundException;
 import com.tech.uc.common.utils.RedisClient;
+import com.tech.uc.common.utils.UserContextUtil;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
 import com.tech.uc.entity.User;
@@ -63,20 +64,8 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("登录认证----doGetAuthenticationInfo");
         String username = (String)token.getPrincipal();
-        String baseURL = redisClient.get("baseURL").toString();
-        User user = null;
-        // 把用户信息放置在缓存中，减小数据库压力,**安全问题：用户已经重新登录，之前缓存的用户信息应当删除
-        // 采用user ---> map<username, user> 缓存用户信息
-        Map<Object, Object> hmget = redisClient.hmget("user");
-        if (hmget != null && hmget.size() > 0 && hmget.get(username) != null) {
-            user = (User) hmget.get(username);
-        } else {
-            user = userService.findByUsername(username, baseURL);
-            Map<String, Object> map = new HashMap<>();
-            map.put(username, user);
-            redisClient.hmset("user", map);
-        }
-        redisClient.set("menus", user.getMenus());
+        String baseURL = UserContextUtil.currentBaseURL();
+        User user = userService.findByUsername(username, baseURL);
         if (user == null) {
             throw new UserNotFoundException("用户不存在");
         }
@@ -84,6 +73,7 @@ public class CustomRealm extends AuthorizingRealm {
         if (user.getStatus() == 0) {
             throw new LockedAccountException();
         }
+        UserContextUtil.setCurrentMenus(user.getMenus());
         return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
     }
 
