@@ -7,7 +7,9 @@ admin_user( this contains vue &amp; elementUI &amp; springboo and so on)
 会导致类加载器的不同，导致同类型cast错误
 ---
 ##3.shiro整合redis持久化session时遇到的问题
+
 ###3.1 Cookie名称JSESSIONID重复问题
+
 [详情参考博客](https://www.cnblogs.com/hafiz/p/7247005.html)
 
 **3.1.1.**
