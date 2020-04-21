@@ -51,3 +51,9 @@ customSessionManager.setSessionIdCookie(simpleCookie());
         return customSessionManager;
     }
 ```
+
+
+
+###4.请求状态码
+HttpServletResponse.SC_OK
+HttpServletResponse下还有很多常用的状态码，可参考此类

@@ -1,6 +1,7 @@
 package com.tech.uc.conf;
 
 import com.tech.uc.conf.filter.CustomRolesOrAuthorizationFilter;
+import com.tech.uc.conf.filter.SessionCheckFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -25,6 +26,8 @@ import org.springframework.context.annotation.DependsOn;
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
 
 /**
  * @author zhuyz
@@ -62,6 +65,7 @@ public class ShiroConfig {
 
         // 设置自定义filter
         Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("sessionCheck", new SessionCheckFilter());
         filterMap.put("roleOrFilter", new CustomRolesOrAuthorizationFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
 
@@ -69,18 +73,18 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
 
-        filterChainDefinitionMap.put("/", "anon");
+//        filterChainDefinitionMap.put("/", "anon");
         // swagger放行
-//        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-//        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-//        filterChainDefinitionMap.put("/v2/**", "anon");
-//        filterChainDefinitionMap.put("/webjars/**", "anon");
-//        filterChainDefinitionMap.put("/configuration/security", "anon");
-//        filterChainDefinitionMap.put("/configuration/ui", "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/configuration/security", "anon");
+        filterChainDefinitionMap.put("/configuration/ui", "anon");
 
 //        filterChainDefinitionMap.put("/logout", "logout");
         // 匿名可访问路径
-//        filterChainDefinitionMap.put("/pub/**", "anon");
+        filterChainDefinitionMap.put("/pub/**", "anon");
 //        filterChainDefinitionMap.put("/user/**", "anon");
 //
 //        // 登录用户才可以访问的
@@ -96,6 +100,11 @@ public class ShiroConfig {
 //        // anon： url可以匿名访问
 //        filterChainDefinitionMap.put("/**", "authc");
 
+
+
+        filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/**", "sessionCheck");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         LOGGER.info("Shiro拦截器工厂类注入成功");
@@ -105,6 +114,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+
         // 如果不是前后台分离，则无需设置
         securityManager.setSessionManager(sessionManager());
 
@@ -201,7 +211,7 @@ public class ShiroConfig {
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         // 自定义redis缓存session的key名称
-        redisSessionDAO.setKeyPrefix("token:");
+//        redisSessionDAO.setKeyPrefix("");
         redisSessionDAO.setRedisManager(redisManager());
         // 自定义sessionId生成策略
         redisSessionDAO.setSessionIdGenerator(sessionIdGenerator());
@@ -226,14 +236,19 @@ public class ShiroConfig {
         cookie.setPath("/");
         return cookie;
     }
-
-
+//    /**
+//     * Shiro生命周期处理器
+//     * @return
+//     */
+//    @Bean
+//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+//        return new LifecycleBeanPostProcessor();
+//    }
 
     /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),
-     * 需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
-     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和
-     * AuthorizationAttributeSourceAdvisor)即可实现此功能
+     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
+     * @return
      */
     @Bean
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {

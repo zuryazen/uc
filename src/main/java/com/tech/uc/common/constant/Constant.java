@@ -29,6 +29,8 @@ public class Constant {
         public static final Integer USER_INVALID = 601;
         // 未登录
         public static final Integer NO_LOGIN = 602;
+        // session失效
+        public static final Integer SESSION_INVALID = 603;
     }
 
     public static class Auth {

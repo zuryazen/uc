@@ -4,6 +4,7 @@ import com.tech.uc.entity.Org;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,15 @@ public class UserContextUtil {
 
 
     private UserContextUtil() {}
+
+    /**
+     * 当前session
+     * @return
+     */
+    public static Session currentSession() {
+        return SecurityUtils.getSubject().getSession();
+    }
+
 
     /**
      * 当前运行服务器
