@@ -5,17 +5,23 @@ server:
     context-path: '/api'
 
 
-
-mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.tech.uc.entity
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
+## mybatis
+#mybatis:
+#  mapper-locations: classpath:mapper/*Mapper.xml
+#  type-aliases-package: com.tech.uc.entity
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
 
 mybatis-plus:
   type-aliases-package: com.tech.uc.entity
   mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    #驼峰下划线转换
+    db-column-underline: true
 
 #pageHelper
 pagehelper:

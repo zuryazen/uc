@@ -5,8 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="map" type="com.tech.uc.entity.User">
         <id column="ID" property="id" />
-        <collection property="orgList" column="id" select="com.tech.uc.mapper.OrgMapper.getOrgListByUserId" />
-        <collection property="roleList" column="id" select="com.tech.uc.mapper.RoleMapper.findListByUserId" />
+        <collection property="orgList" ofType="com.tech.uc.entity.Org" column="id" select="com.tech.uc.mapper.OrgMapper.getOrgListByUserId" />
+        <collection property="roleList" ofType="com.tech.uc.entity.Role" column="id" select="com.tech.uc.mapper.RoleMapper.findListByUserId" />
     </resultMap>
 
     <select id="findAllUser" resultMap="map">
@@ -19,7 +19,7 @@
             username,
             password,
             salt,
-            full_name,
+            FULL_NAME,
             birthday,
             sex,
             icon,
@@ -29,8 +29,7 @@
             status,
             sort,
             district,
-            remarks
-        FROM t_base_user
+            remarks FROM t_base_user
         WHERE username = #{username}
     </select>
 
@@ -51,14 +50,10 @@
 
         WHERE c.id = #{orgId}
         <if test="username!=''">
-
             and a.username like CONCAT(CONCAT('%', #{username}), '%')
-
         </if>
         <if test="fullName!=''">
-
             and a.FULL_NAME like CONCAT(CONCAT('%', #{fullName}), '%')
-
         </if>
     </select>
 
@@ -67,7 +62,6 @@
         FROM t_base_user a
             JOIN t_base_user_role b ON a.id = b.user_id
             JOIN t_base_role c ON c.id = b.role_id
-
         WHERE c.id = #{roleId}
     </select>
 
@@ -83,7 +77,6 @@
 
     <insert id="insertUserOrgList">
         insert into T_BASE_ORG_USER (ORG_ID, USER_ID)
-
         SELECT A.* FROM (
         <foreach collection="orgList" item="item" index="index" open="" close="" separator="UNION ALL">
             SELECT
@@ -92,7 +85,6 @@
             FROM DUAL
         </foreach>
         ) A
-
     </insert>
 
     <insert id="insertUserRoleList">
@@ -105,9 +97,7 @@
             FROM DUAL
         </foreach>
         ) A
-
     </insert>
-
 
     <select id="findByOrgIdAndRoleCode" resultMap="map">
         SELECT a.*
@@ -116,11 +106,9 @@
             JOIN t_base_org c ON c.id = b.org_id
             JOIN t_base_user_role d ON a.id = d.user_id
             JOIN t_base_role e ON e.id = d.role_id
-
         WHERE c.id = #{orgId}
         AND e.CODE = #{roleCode}
     </select>
-
 
 
 </mapper>

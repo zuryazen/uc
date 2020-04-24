@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.common.utils.UserContextUtil;
+import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,9 +114,9 @@ public class UserController {
      */
     @PostMapping("/curMenus")
     public ResponseEntity getCurrentUserResourcesTree() {
-        User user = (User)SecurityUtils.getSubject().getPrincipal();
-        return UserContextUtil.currentMenus() == null ?
-                ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(user.getMenus());
+        List<Resource> menus = UserContextUtil.currentMenus();
+        return menus == null ?
+                ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(menus);
     }
 
 

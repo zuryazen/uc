@@ -5,7 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="map" type="com.tech.uc.entity.Role">
         <id column="ID" property="id" />
-        <id column="NAME" property="name" javaType="String" jdbcType="VARCHAR" />
         <collection property="resourceList" column="id" select="com.tech.uc.mapper.ResourceMapper.findByRoleId" />
     </resultMap>
 
@@ -20,7 +19,6 @@
         SELECT id, name, code, enabled, org_id, sort, remarks
         FROM t_base_role
         WHERE org_id = #{orgId}
-
         <if test="username!=''">
             and name like CONCAT(CONCAT('%', #{name}), '%')
         </if>

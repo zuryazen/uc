@@ -57,3 +57,19 @@ customSessionManager.setSessionIdCookie(simpleCookie());
 ###4.请求状态码
 HttpServletResponse.SC_OK
 HttpServletResponse下还有很多常用的状态码，可参考此类
+
+
+###5.mybatis-plus配置问题
+#####yml中mybatis-plus配置过后无需再配置mybatis
+```
+mybatis-plus:
+  type-aliases-package: com.tech.uc.entity
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    #！！！驼峰下划线转换
+    db-column-underline: true  // 全局配置，很重要，要不然数据库中带有下划线的字段值映射不到实体类中
+``` 
+[更多配置详情参考博客](https://www.cnblogs.com/lianggp/p/7573653.html)

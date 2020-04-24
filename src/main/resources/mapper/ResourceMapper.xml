@@ -25,7 +25,8 @@
             PROJECT_NO,
             sort,
             icon,
-            remarks
+            remarks,
+            COMPONENT_NAME
         FROM t_base_resource a
             JOIN t_base_role_resource b ON a.id = b.resource_id
         WHERE b.role_id = #{roleId}
@@ -45,7 +46,8 @@
         PROJECT_NO,
         sort,
         icon,
-        remarks
+        remarks,
+        COMPONENT_NAME
         FROM T_BASE_RESOURCE
 
         WHERE name like '%' || #{name} || '%'
@@ -65,7 +67,8 @@
             PROJECT_NO,
             sort,
             icon,
-            remarks
+            remarks,
+            COMPONENT_NAME
         FROM t_base_resource
     </select>
 

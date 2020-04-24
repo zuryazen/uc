@@ -62,6 +62,10 @@ public class Resource extends Model<Resource> {
     // 图标名称
     private String icon;
 
+    // 组件名称-用于 前台侧边栏 路由index赋值
+    private String componentName;
+
+
     // 子菜单集合
     private List<Resource> childrens = new ArrayList<>();
 
