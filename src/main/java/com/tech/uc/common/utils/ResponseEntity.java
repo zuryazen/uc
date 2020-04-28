@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+import static com.tech.uc.common.constant.Constant.StatusCode.LOGIN_ERROR;
+import static com.tech.uc.common.constant.Constant.StatusCode.OK;
+
 @Data
 @NoArgsConstructor
 public class ResponseEntity<T> implements Serializable {
@@ -29,28 +32,26 @@ public class ResponseEntity<T> implements Serializable {
     }
 
     public static <T> ResponseEntity<T> buildSuccess(T data) {
-        return new ResponseEntity<>(data, Constant.StatusCode.OK);
+        return new ResponseEntity<>(data, OK);
     }
     public static <T> ResponseEntity<T> buildSuccess(String msg) {
-        return new ResponseEntity<>(null, Constant.StatusCode.OK, msg);
+        return new ResponseEntity<>(null, OK, msg);
     }
 
     public static <T> ResponseEntity<T> buildSuccess(T data, String msg) {
-        return new ResponseEntity<>(data, Constant.StatusCode.OK, msg);
+        return new ResponseEntity<>(data, OK, msg);
     }
 
-    public static <T> ResponseEntity<T> buildError(T data) {
-        return new ResponseEntity<>(data, Constant.StatusCode.LOGIN_ERROR);
-    }
-    public static ResponseEntity buildError(String msg) {
-        return new ResponseEntity<>(null, Constant.StatusCode.LOGIN_ERROR, msg);
+    public static ResponseEntity loginError(String msg) {
+        return new ResponseEntity<>(null, LOGIN_ERROR, msg);
     }
 
-    public static <T> ResponseEntity<T> buildError(T data, String msg) {
-        return new ResponseEntity<>(data, Constant.StatusCode.LOGIN_ERROR, msg);
+    public static <T> ResponseEntity<T> loginError(T data, String msg) {
+        return new ResponseEntity<>(data, LOGIN_ERROR, msg);
     }
-    public static <T> ResponseEntity<T> buildError(T data, int code, String msg) {
-        return new ResponseEntity<>(data, code, msg);
+
+    public static <T> ResponseEntity<T> loginError(T data) {
+        return new ResponseEntity<>(data, LOGIN_ERROR);
     }
 
     public static <T> ResponseEntity<T> buildCustom(T data, int code) {

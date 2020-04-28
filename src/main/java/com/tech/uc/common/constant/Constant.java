@@ -5,6 +5,7 @@ public class Constant {
     // 状态码
     public static class StatusCode {
 
+        public static final Integer UNKNOWN_ERROR = -1;
         // 客户端请求成功
         public static final Integer OK = 200;
         // redirect到其它的页面
@@ -31,6 +32,17 @@ public class Constant {
         public static final Integer NO_LOGIN = 602;
         // session失效
         public static final Integer SESSION_INVALID = 603;
+        // 更新失败
+        public static final Integer UPDATE_ERROR = 604;
+        // 刪除失败
+        public static final Integer DELETE_ERROR = 605;
+        // 请求用户不存在
+        public static final Integer USER_NOT_FOUND = 606;
+        // 密码错误
+        public static final Integer PASSWORD_ERROR = 607;
+        // 错误登录次数过多
+        public static final Integer LOGIN_ERR_TOO_LONG = 608;
+
     }
 
     public static class Auth {

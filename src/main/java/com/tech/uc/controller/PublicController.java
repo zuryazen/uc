@@ -47,33 +47,17 @@ public class PublicController {
     @Autowired
     private RedisClient redisClient;
 
-    @Autowired
-    private RedisSessionDAO redisSessionDAO;
-
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
-
-    @GetMapping("/need_login")
-    public ResponseEntity needLogin() {
-        return ResponseEntity.buildCustom("温馨提示，未登录，请先登录", NO_LOGIN);
-    }
-
-    @GetMapping("/not_permit")
-    public ResponseEntity noPermit() {
-        return ResponseEntity.buildError("温馨提示：拒绝访问，没有权限");
-    }
-
-
-    @GetMapping("/index")
-    public ResponseEntity index() {
-        ArrayList<Object> videoList = new ArrayList<>();
-        videoList.add("java从入门到放弃");
-        videoList.add("python从入门到放弃");
-        videoList.add("redis从入门到放弃");
-        videoList.add("zookeeper从入门到放弃");
-        videoList.add("springcloud从入门到放弃");
-        return ResponseEntity.buildSuccess(videoList);
-    }
+//
+//    @GetMapping("/need_login")
+//    public ResponseEntity needLogin() {
+//        return ResponseEntity.buildCustom("温馨提示，未登录，请先登录", NO_LOGIN);
+//    }
+//
+//    @GetMapping("/not_permit")
+//    public ResponseEntity noPermit() {
+//        return ResponseEntity.buildCustom("温馨提示：拒绝访问，没有权限", UNAUTHORIZED);
+//    }
 
     /**
      * login接口
@@ -97,43 +81,20 @@ public class PublicController {
             info.put("sessionId", UserContextUtil.currentSessionId());
             info.put("menus", UserContextUtil.currentMenus());
             return ResponseEntity.buildSuccess(info, "登录成功");
-        }catch (UserNotFoundException e) {
+        } catch (UserNotFoundException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);
-            return ResponseEntity.buildError(e.getMessage());
-        }catch (PwdErrorException e) {
+            return ResponseEntity.buildCustom(e.getMessage(), USER_NOT_FOUND);
+        } catch (PwdErrorException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，密码错误", e);
-            return ResponseEntity.buildError(e.getMessage());
-        }catch (PwdErrorManyException e) {
+            return ResponseEntity.buildCustom(e.getMessage(), PASSWORD_ERROR);
+        } catch (PwdErrorManyException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，错误登录次数过多，账号被锁定", e);
-            return ResponseEntity.buildError(e.getMessage());
-        }catch (Exception e) {
+            return ResponseEntity.buildCustom(e.getMessage(), LOGIN_ERR_TOO_LONG);
+        } catch (Exception e) {
             LOGGER.error(userVO.getUsername() + "登录失败，未知错误", e);
-            return ResponseEntity.buildError(e.getMessage());
+            return ResponseEntity.buildCustom(e.getMessage(), UNKNOWN_ERROR);
         }
-
     }
-
-
-    @GetMapping("/checkToken")
-    public ResponseEntity checkToken() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject == null) {
-            return ResponseEntity.buildCustom("USER_INVALID", USER_INVALID);
-        }
-
-//        if (redisClient.get() > 0) {
-//            return ResponseEntity.buildCustom("USER_NO_INVALID", OK);
-//        }
-
-
-
-        return null;
-
-
-
-    }
-
-
 
 
 

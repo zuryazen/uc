@@ -56,7 +56,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         // 需要登录的接口，如果需要访问某个接口，如果没有登录，则会跳转到此接口(如果不是前后端分离，则跳转页面)
-        shiroFilterFactoryBean.setLoginUrl("/pub/need_login");
+        shiroFilterFactoryBean.setLoginUrl("/pub/login");
         // 设置登录成功的跳转页面，如果前后端分离则无此选项
 //        shiroFilterFactoryBean.setSuccessUrl("/index");
 

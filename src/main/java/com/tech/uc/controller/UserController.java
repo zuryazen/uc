@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.tech.uc.common.constant.Constant.StatusCode.*;
+
 /**
  * <p>
  *  前端控制器
@@ -43,15 +45,15 @@ public class UserController {
      * @return
      */
     @GetMapping("/findAll/{pageNum}/{pageSize}")
-    public ResponseEntity<PageInfo<User>> findAllUser(@PathVariable("pageNum") Integer pageNum,
-                                                      @PathVariable("pageSize") Integer pageSize, HttpServletRequest request) {
+    public ResponseEntity<PageInfo<User>> findAllUser(
+            @PathVariable("pageNum") Integer pageNum,
+            @PathVariable("pageSize") Integer pageSize, HttpServletRequest request) {
         PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
         return ResponseEntity.buildSuccess(userPageInfos, "query ok");
     }
 
     @GetMapping("/findUser/{id}")
     public ResponseEntity findUserById(@PathVariable("id") Integer id) {
-        ResponseEntity responseEntity = new ResponseEntity<>();
         User userById = userService.selectById(id);
         if (userById != null) {
             return ResponseEntity.buildSuccess(userById);
@@ -66,14 +68,13 @@ public class UserController {
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Integer> deleteUserById(@PathVariable("id") Integer id) {
-        ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
+    public ResponseEntity deleteUserById(@PathVariable("id") Integer id) {
         boolean state = userService.deleteById(id);
         if (state) {
             Integer pageTotal = userService.selectCount(new EntityWrapper<>());
             return ResponseEntity.buildSuccess(pageTotal, "delete ok");
         } else {
-            return ResponseEntity.buildCustom(null, 601, "delete error");
+            return ResponseEntity.buildCustom("delete error", DELETE_ERROR);
         }
     }
 
@@ -83,11 +84,10 @@ public class UserController {
      * @return
      */
     @PutMapping("/update")
-    public ResponseEntity<User> updateUserById(@RequestBody User user) {
-        ResponseEntity<User> responseEntity = new ResponseEntity<>();
+    public ResponseEntity updateUserById(@RequestBody User user) {
         boolean b = userService.updateById(user);
         return b ? ResponseEntity.buildSuccess(user, "update ok")
-                : ResponseEntity.buildError(user, 602, "update error");
+                : ResponseEntity.buildCustom(user, UPDATE_ERROR, "update error");
     }
 
     /**
@@ -97,13 +97,12 @@ public class UserController {
      * @return
      */
     @PutMapping("/updateStatus/{id}/{status}")
-    public ResponseEntity<Integer> updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
-        ResponseEntity<Integer> responseEntity = new ResponseEntity<>();
+    public ResponseEntity updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
         User user = userService.selectById(id);
         user.setStatus(status);
         boolean b = userService.updateById(user);
-        return b ? ResponseEntity.buildSuccess(1, "update ok")
-                : ResponseEntity.buildError(-1, "update error");
+        return b ? ResponseEntity.buildSuccess("update ok")
+                : ResponseEntity.buildCustom("update error", UPDATE_ERROR);
     }
 
 
@@ -115,8 +114,8 @@ public class UserController {
     @PostMapping("/curMenus")
     public ResponseEntity getCurrentUserResourcesTree() {
         List<Resource> menus = UserContextUtil.currentMenus();
-        return menus == null ?
-                ResponseEntity.buildError("用户为空") : ResponseEntity.buildSuccess(menus);
+        return menus == null && menus.size() > 0 ?
+                ResponseEntity.buildCustom("用户为空", NOT_FOUND) : ResponseEntity.buildSuccess(menus);
     }
 
 
