@@ -44,7 +44,7 @@ public interface UserService extends IService<User> {
      * @param username
      * @return
      */
-    User findByUsername(String username, String uri);
+    User findByUsername(String username);
 
     /**
      * 根据组织ID获取组织下的用户列表

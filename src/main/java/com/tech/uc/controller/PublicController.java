@@ -3,8 +3,12 @@ package com.tech.uc.controller;
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
+import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.UserContextUtil;
 import com.tech.uc.conf.CustomSessionManager;
+import com.tech.uc.entity.User;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.subject.support.WebDelegatingSubject;
 import org.crazycake.shiro.RedisSessionDAO;
@@ -20,6 +24,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
+import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_TOKEN;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
 
 /**
@@ -41,23 +47,13 @@ import static com.tech.uc.common.constant.Constant.StatusCode.*;
 @RequestMapping("/pub")
 public class PublicController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private RedisClient redisClient;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
-//
-//    @GetMapping("/need_login")
-//    public ResponseEntity needLogin() {
-//        return ResponseEntity.buildCustom("温馨提示，未登录，请先登录", NO_LOGIN);
-//    }
-//
-//    @GetMapping("/not_permit")
-//    public ResponseEntity noPermit() {
-//        return ResponseEntity.buildCustom("温馨提示：拒绝访问，没有权限", UNAUTHORIZED);
-//    }
 
     /**
      * login接口
@@ -71,19 +67,34 @@ public class PublicController {
         Subject subject = SecurityUtils.getSubject();
         Map<String, Object> info = new HashMap<>();
         try {
-            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userVO.getUsername(),
-                    userVO.getPassword());
-            String requestURL = request.getRequestURL().toString();
-            String requestURI = request.getRequestURI();
-            requestURL = requestURL.replaceAll(requestURI, "");
-            UserContextUtil.setCurrentBaseURL(requestURL);
-            subject.login(usernamePasswordToken);
-            info.put("sessionId", UserContextUtil.currentSessionId());
-            info.put("menus", UserContextUtil.currentMenus());
+            String username = userVO.getUsername();
+            String password = userVO.getPassword();
+            User user = userService.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("用户不存在");
+            }
+            // 账户冻结
+            if (user.getStatus() == 0) {
+                throw new LockedAccountException();
+            }
+            String hashName = "MD5";
+            SimpleHash hash = new SimpleHash(hashName, password, null, 2);
+            if(!hash.toHex().equals(user.getPassword())){
+               throw new PwdErrorException();
+            }
+            redisClient.set(username, user);
+            // 生成token
+            String token = JwtUtils.sign(username, password);
+            redisClient.set(PREFIX_USER_TOKEN + token, token,JwtUtils.EXPIRE_TIME / 1000);
+            info.put("token", token);
+            info.put("user", user);
             return ResponseEntity.buildSuccess(info, "登录成功");
         } catch (UserNotFoundException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);
             return ResponseEntity.buildCustom(e.getMessage(), USER_NOT_FOUND);
+        } catch (LockedAccountException e) {
+            LOGGER.error(userVO.getUsername() + "登录失败，账号被锁", e);
+            return ResponseEntity.buildCustom(e.getMessage(), USER_LOCK);
         } catch (PwdErrorException e) {
             LOGGER.error(userVO.getUsername() + "登录失败，密码错误", e);
             return ResponseEntity.buildCustom(e.getMessage(), PASSWORD_ERROR);
@@ -96,6 +107,10 @@ public class PublicController {
         }
     }
 
-
+    @GetMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
+        UserContextUtil.currentSubject().logout();
+        return ResponseEntity.buildSuccess();
+    }
 
 }

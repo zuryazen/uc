@@ -42,11 +42,14 @@ public class Constant {
         public static final Integer PASSWORD_ERROR = 607;
         // 错误登录次数过多
         public static final Integer LOGIN_ERR_TOO_LONG = 608;
+        // 账号被锁
+        public static final Integer USER_LOCK = 609;
 
     }
 
     public static class Auth {
         public static final String AUTHORIZATION = "Authorization";
+        public static final String PREFIX_USER_TOKEN = "ut";
         public static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
     }
 

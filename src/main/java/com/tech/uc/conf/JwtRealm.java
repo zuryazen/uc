@@ -1,6 +1,7 @@
 package com.tech.uc.conf;
 
 import com.tech.uc.common.exception.UserNotFoundException;
+import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.UserContextUtil;
 import com.tech.uc.entity.Resource;
@@ -28,13 +29,18 @@ import java.util.stream.Collectors;
  * @date 2020/4/1 0001 23:24
  * @description 自定义realm
  */
-public class CustomRealm extends AuthorizingRealm {
+public class JwtRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private RedisClient redisClient;
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JwtToken;
+    }
 
     /**
      * 授权,进行权限校验的时候回调
@@ -56,16 +62,16 @@ public class CustomRealm extends AuthorizingRealm {
 
     /**
      * 登录认证
-     * @param token 用户登录输入的信息
+     * @param authenticationToken 用户登录输入的信息
      * @return
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        System.out.println("登录认证----doGetAuthenticationInfo");
-        String username = (String)token.getPrincipal();
-        String baseURL = UserContextUtil.currentBaseURL();
-        User user = userService.findByUsername(username, baseURL);
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("登录认证begin----doGetAuthenticationInfo");
+        String token = (String)authenticationToken.getPrincipal();
+        String username = JwtUtils.getUsername(token);
+        User user = userService.findByUsername(username);
         if (user == null) {
             throw new UserNotFoundException("用户不存在");
         }
@@ -74,7 +80,8 @@ public class CustomRealm extends AuthorizingRealm {
             throw new LockedAccountException();
         }
         UserContextUtil.setCurrentMenus(user.getMenus());
-        return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+        System.out.println("登录认证end----doGetAuthenticationInfo");
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 
 

@@ -21,6 +21,10 @@ public class ResponseEntity<T> implements Serializable {
     private String msg;
     private T data;
 
+    public ResponseEntity(int code) {
+        this.code = code;
+    }
+
     public ResponseEntity(T data, int code) {
         this.data = data;
         this.code = code;
@@ -30,7 +34,9 @@ public class ResponseEntity<T> implements Serializable {
         this.code = code;
         this.msg = msg;
     }
-
+    public static <T> ResponseEntity<T> buildSuccess() {
+        return new ResponseEntity<>(OK);
+    }
     public static <T> ResponseEntity<T> buildSuccess(T data) {
         return new ResponseEntity<>(data, OK);
     }

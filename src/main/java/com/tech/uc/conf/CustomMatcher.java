@@ -2,6 +2,7 @@ package com.tech.uc.conf;
 
 import com.tech.uc.common.exception.PwdErrorException;
 import com.tech.uc.common.exception.PwdErrorManyException;
+import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.UserContextUtil;
 import org.apache.shiro.authc.*;
@@ -26,16 +27,15 @@ public class CustomMatcher extends HashedCredentialsMatcher {
 
     /**
      * 自定义校验登录
-     * @param token
+     * @param authenticationToken
      * @param info
      * @return
      */
     @Override
-    public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
+    public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo info) {
 
-        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-
-        String username = usernamePasswordToken.getUsername();
+        String token = (String)authenticationToken.getPrincipal();
+        String username = JwtUtils.getUsername(token);
 
         // redis存储的错误登录用户的key
         String failKey = PREFIX + username;
@@ -53,7 +53,7 @@ public class CustomMatcher extends HashedCredentialsMatcher {
         }
 
         // 使用父类继续比较登录用户是否正确
-        boolean match = super.doCredentialsMatch(token, info);
+        boolean match = super.doCredentialsMatch(authenticationToken, info);
 
         // 如果校验密码匹配成功，则删除redis中缓存的failkey，否则对错误次数累加，并且重新设置过期时间
         if (match) {

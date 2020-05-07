@@ -5,6 +5,8 @@ import com.tech.uc.common.exception.SessionValidException;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.common.utils.UserContextUtil;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.filter.authc.UserFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.PrintWriter;
 
+import static com.tech.uc.common.constant.Constant.StatusCode.OK;
 import static com.tech.uc.common.constant.Constant.StatusCode.SESSION_INVALID;
 import static javax.servlet.http.HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION;
 
@@ -24,11 +27,27 @@ import static javax.servlet.http.HttpServletResponse.SC_NON_AUTHORITATIVE_INFORM
  * @date 2020/4/21 0021 20:49
  * @description
  */
-public class SessionCheckFilter extends UserFilter {
+public class SessionCheckFilter extends AuthenticatingFilter {
     private static final String DEFAULT_SESSION_KEY_PREFIX = "shiro:session:";
 
     public SessionCheckFilter() {
         super();
+    }
+
+    @Override
+    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
+        return null;
+    }
+
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        //Always return true if the request's method is OPTIONS
+        if (request instanceof HttpServletRequest) {
+            if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
+                return true;
+            }
+        }
+        return super.isAccessAllowed(request, response, mappedValue);
     }
 
     // 访问禁止时，调用该方法
@@ -37,9 +56,9 @@ public class SessionCheckFilter extends UserFilter {
         //允许跨域,不能放在postHandle内
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Origin", res.getHeader("origin"));
         // 状态码非200，则前台响应失败，所以需要用200状态码；后台只做数据响应给前台，不做请求的跳转
-        res.setStatus(SESSION_INVALID);
+        res.setStatus(OK);
 //        res.sendError(SESSION_INVALID);
         res.setCharacterEncoding("UTF-8");
         PrintWriter writer = res.getWriter();
@@ -47,7 +66,6 @@ public class SessionCheckFilter extends UserFilter {
         writer.flush();
         writer.close();
         // ！！！！！！！！！！！！！！整改该过滤器，使用https://blog.csdn.net/sqlgao22/article/details/99186391提供的思路去构建
-        // 如果前台session，后台session为空，或者不相等，则清空缓存中的session
         UserContextUtil.currentSession().setTimeout(0);
         return false;
     }

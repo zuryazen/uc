@@ -3,6 +3,7 @@ package com.tech.uc.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageInfo;
+import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.common.utils.UserContextUtil;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
 
 /**
@@ -112,8 +114,11 @@ public class UserController {
      * @return
      */
     @PostMapping("/curMenus")
-    public ResponseEntity getCurrentUserResourcesTree() {
-        List<Resource> menus = UserContextUtil.currentMenus();
+    public ResponseEntity getCurrentUserResourcesTree(HttpServletRequest request) {
+        String token = request.getHeader(AUTHORIZATION);
+        String username = JwtUtils.getUsername(token);
+        User user = (User)redisClient.get(username);
+        List<Resource> menus = user.getMenus();
         return menus == null && menus.size() > 0 ?
                 ResponseEntity.buildCustom("用户为空", NOT_FOUND) : ResponseEntity.buildSuccess(menus);
     }

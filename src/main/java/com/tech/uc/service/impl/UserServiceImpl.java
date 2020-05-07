@@ -85,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public User findByUsername(String username, String uri) {
+    public User findByUsername(String username) {
         User user = userMapper.findByUsername(username);
         HashSet<Resource> resources = new HashSet<>();
 
@@ -93,17 +93,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             resources.addAll(role.getResourceList());
         }
         user.setResourceList(new ArrayList<>(resources));
-        Map<String, String> serverMap = serverService.getServerMapByUri(uri);
 
         List<Resource> menus = resources.parallelStream()
                 .filter(o -> o.getEnabled() == 1 && "1".equals(o.getType()))
                 .sorted((o1, o2) -> o1.getSort() <= o2.getSort() ? (o1.getSort() == o2.getSort() ? 0 : -1) : 1)
                 .collect(Collectors.toList());
-
-        for (Resource menu : menus) {
-            String prefix = StringUtils.isEmpty(serverMap.get(menu.getProjectNo())) ? "" : serverMap.get(menu.getProjectNo());
-            menu.setUri(prefix + (menu.getUri() == null ? StringUtils.EMPTY : menu.getUri()));
-        }
         user.setMenus(list2tree(menus));
         return user;
     }
