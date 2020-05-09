@@ -5,37 +5,28 @@ import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
 import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.UserContextUtil;
-import com.tech.uc.conf.CustomSessionManager;
 import com.tech.uc.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.subject.support.WebDelegatingSubject;
-import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.service.UserService;
 import com.tech.uc.vo.UserVO;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
-import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_TOKEN;
+import static com.tech.uc.common.constant.Constant.Auth.*;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
 
 /**
@@ -45,9 +36,9 @@ import static com.tech.uc.common.constant.Constant.StatusCode.*;
  */
 @RestController
 @RequestMapping("/pub")
+@Slf4j
 public class PublicController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PublicController.class);
 
     @Autowired
     private UserService userService;
@@ -57,6 +48,7 @@ public class PublicController {
 
     /**
      * login接口
+     *
      * @param userVO
      * @param request
      * @param response
@@ -64,52 +56,80 @@ public class PublicController {
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
-        Subject subject = SecurityUtils.getSubject();
-        Map<String, Object> info = new HashMap<>();
-        try {
-            String username = userVO.getUsername();
-            String password = userVO.getPassword();
-            User user = userService.findByUsername(username);
-            if (user == null) {
-                throw new UserNotFoundException("用户不存在");
-            }
-            // 账户冻结
-            if (user.getStatus() == 0) {
-                throw new LockedAccountException();
-            }
-            String hashName = "MD5";
-            SimpleHash hash = new SimpleHash(hashName, password, null, 2);
-            if(!hash.toHex().equals(user.getPassword())){
-               throw new PwdErrorException();
-            }
-            redisClient.set(username, user);
-            // 生成token
-            String token = JwtUtils.sign(username, password);
-            redisClient.set(PREFIX_USER_TOKEN + token, token,JwtUtils.EXPIRE_TIME / 1000);
-            info.put("token", token);
-            info.put("user", user);
-            return ResponseEntity.buildSuccess(info, "登录成功");
-        } catch (UserNotFoundException e) {
-            LOGGER.error(userVO.getUsername() + "登录失败，用户不存在", e);
-            return ResponseEntity.buildCustom(e.getMessage(), USER_NOT_FOUND);
-        } catch (LockedAccountException e) {
-            LOGGER.error(userVO.getUsername() + "登录失败，账号被锁", e);
-            return ResponseEntity.buildCustom(e.getMessage(), USER_LOCK);
-        } catch (PwdErrorException e) {
-            LOGGER.error(userVO.getUsername() + "登录失败，密码错误", e);
-            return ResponseEntity.buildCustom(e.getMessage(), PASSWORD_ERROR);
-        } catch (PwdErrorManyException e) {
-            LOGGER.error(userVO.getUsername() + "登录失败，错误登录次数过多，账号被锁定", e);
-            return ResponseEntity.buildCustom(e.getMessage(), LOGIN_ERR_TOO_LONG);
-        } catch (Exception e) {
-            LOGGER.error(userVO.getUsername() + "登录失败，未知错误", e);
-            return ResponseEntity.buildCustom(e.getMessage(), UNKNOWN_ERROR);
+        String username = userVO.getUsername();
+        String password = userVO.getPassword();
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException("用户不存在");
         }
+        // 账户冻结
+        if (user.getStatus() == 0) {
+            throw new LockedAccountException();
+        }
+        String hashName = "MD5";
+        SimpleHash hashPwd = new SimpleHash(hashName, password, null, 2);
+        if (!hashPwd.toHex().equals(user.getPassword())) {
+            throw new PwdErrorException();
+        }
+        String userId = user.getId();
+        // 生成token
+        String token = JwtUtils.sign(userId, username, password);
+        user.setToken(token);
+        // 删除重复登录的用户信息
+        redisClient.del(PREFIX_USER_INFO + userId);
+        // 缓存新的用户信息
+        redisClient.set(PREFIX_USER_INFO + userId, user, JwtUtils.EXPIRE_TIME / 1000);
+        return ResponseEntity.buildSuccess(user, "登录成功");
+        //        String token = (String)authenticationToken.getPrincipal();
+//        String username = JwtUtils.getUsername(token);
+//
+//        // redis存储的错误登录用户的key
+//        String failKey = PREFIX + username;
+//        Integer errorLoginCount = 0;
+//
+//        // 从redis中获取登录错误次数
+//        Object errorLogins = redisClient.get(failKey);
+//        if (errorLogins != null) {
+//            errorLoginCount = Integer.parseInt(errorLogins.toString());
+//        }
+//        // 当错误登录次数大于2时，锁定登录用户
+//        if (errorLoginCount >= RETRY_NUM) {
+//            // ExcessiveAttemptsException为shiro中一个可自定义的异常
+//            throw new PwdErrorManyException("登录错误次数过多，账号已锁定，请等待[" + redisClient.getExpire(failKey) + "]秒");
+//        }
+//
+//        // 使用父类继续比较登录用户是否正确
+//        boolean match = super.doCredentialsMatch(authenticationToken, info);
+//
+//        // 如果校验密码匹配成功，则删除redis中缓存的failkey，否则对错误次数累加，并且重新设置过期时间
+//        if (match) {
+//            // 密码比较成功后缓存menus
+//            if (errorLogins != null) {
+//                redisClient.del(failKey);
+//            }
+//        } else {
+//            redisClient.set(failKey, String.valueOf(++errorLoginCount), 60);
+//            throw new PwdErrorException("登录密码错误，请重新输入，重试次数：" + (RETRY_NUM - errorLoginCount));
+//        }
+//
+//        return match;
     }
 
+    /**
+     * 登出，清除【redis缓存的userInfo】
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     @GetMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
-        UserContextUtil.currentSubject().logout();
+        String token = request.getHeader(AUTHORIZATION).toString();
+        if (token == null) {
+            ResponseEntity.buildCustom(null, LOGOUT_ERROR);
+        }
+        String userId = JwtUtils.getUserId(token);
+        redisClient.del(PREFIX_USER_INFO + userId);
         return ResponseEntity.buildSuccess();
     }
 

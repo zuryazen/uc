@@ -103,6 +103,7 @@ public class User extends Model<User> {
     // 用户附带的参数（扩展用）
     private Map<String, Object> params;
 
+    // 存储token
     private String token;
 
     @TableField("CREATE_TIME")

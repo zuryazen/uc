@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.exception.ServiceException;
+import com.tech.uc.common.utils.JwtUtils;
+import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
 import com.tech.uc.entity.User;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
 
 /**
  * <p>
@@ -48,6 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private DictItemService dictItemService;
+
+    @Autowired
+    private RedisClient redisClient;
 
     @CacheEvict(cacheNames = "sys", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
@@ -155,5 +162,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return resources;
     }
 
-
+    @Override
+    public List<Resource> getMenus(String token) {
+        String userId = JwtUtils.getUserId(token);
+        User user = (User)redisClient.get(PREFIX_USER_INFO + userId);
+        List<Resource> menus = user.getMenus();
+        return user.getMenus();
+    }
 }

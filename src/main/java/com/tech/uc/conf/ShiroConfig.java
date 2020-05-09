@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
@@ -55,33 +56,6 @@ public class ShiroConfig {
     }
 
     /**
-     * 交由 Spring 来自动地管理 Shiro-Bean 的生命周期
-     */
-    @Bean
-    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-
-    }
-    /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
-     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
-     * @return
-     */
-    @Bean
-    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        advisorAutoProxyCreator.setProxyTargetClass(true);
-        return advisorAutoProxyCreator;
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-        return authorizationAttributeSourceAdvisor;
-    }
-
-    /**
      * 不向 Spring容器中注册 JwtFilter Bean，防止 Spring 将 JwtFilter 注册为全局过滤器
      * 全局过滤器会对所有请求进行拦截，而本例中只需要拦截除 /login 和 /logout 外的请求
      * 另一种简单做法是：直接去掉 jwtFilter()上的 @Bean 注解
@@ -98,20 +72,13 @@ public class ShiroConfig {
         return new JwtFilter();
 
     }
+
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         LOGGER.info("执行shiroFilterFactoryBean.shiroFilter()");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-
         // 设置securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-
-        // 前后分离不适用:需要登录的接口，如果需要访问某个接口，如果没有登录，则会跳转到此接口(如果不是前后端分离，则跳转页面)
-         shiroFilterFactoryBean.setLoginUrl("/pub/login");
-        // 前后分离不适用:设置登录成功的跳转页面，如果前后端分离则无此选项,
-        // shiroFilterFactoryBean.setSuccessUrl("/index");
-        // 没有权限访问时 跳转的页面，如果前后端分离则无此选项
-        // shiroFilterFactoryBean.setUnauthorizedUrl("/pub/not_permit");
 
         // 设置自定义filter
         Map<String, Filter> filterMap = new LinkedHashMap<>();
@@ -121,49 +88,36 @@ public class ShiroConfig {
 
         // 拦截器路径，注意：一定是LinkedHashMap，因为它是有序的
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-//        filterChainDefinitionMap.put("/", "anon");
         // swagger放行
-//        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-//        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-//        filterChainDefinitionMap.put("/v2/**", "anon");
-//        filterChainDefinitionMap.put("/webjars/**", "anon");
-//        filterChainDefinitionMap.put("/configuration/security", "anon");
-//        filterChainDefinitionMap.put("/configuration/ui", "anon");
-//        // 匿名可访问路径
-//        filterChainDefinitionMap.put("/pub/**", "anon");
-//        filterChainDefinitionMap.put("/user/**", "anon");
-//
-//        // 登录用户才可以访问的
-//        filterChainDefinitionMap.put("/authc/**", "authc");
-//
-//        // admin权限可访问
-//        filterChainDefinitionMap.put("/admin/**", "roleOrFilter[admin, root]");
-//
-//        // editor权限可访问
-//        filterChainDefinitionMap.put("/video/update", "perms[video_update]");
-//
-//        // authc：url定义必须通过认证才可以访问
-//        // anon： url可以匿名访问
-//        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/configuration/security", "anon");
+        filterChainDefinitionMap.put("/configuration/ui", "anon");
 
-        filterChainDefinitionMap.put("/**", "anon");
         filterChainDefinitionMap.put("/**", "jwt");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
         LOGGER.info("Shiro拦截器工厂类注入成功");
         return shiroFilterFactoryBean;
     }
-    /**
-     * 配置 ModularRealmAuthenticator
-     */
+
     @Bean
-    public ModularRealmAuthenticator authenticator() {
-        ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
-        // 设置多 Realm的认证策略，默认 AtLeastOneSuccessfulStrategy
-        AuthenticationStrategy strategy = new FirstSuccessfulStrategy();
-        authenticator.setAuthenticationStrategy(strategy);
-        return authenticator;
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 使用自定义cacheManager
+        securityManager.setCacheManager(redisCacheManager());
+
+        // 设置realm(推荐放到最后，不然某些情况不会生效)
+        securityManager.setRealm(jwtRealm());
+
+        // 关闭shiro自带的session
+        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+        subjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator());
+        securityManager.setSubjectDAO(subjectDAO);
+
+        return securityManager;
     }
 
     /**
@@ -194,24 +148,12 @@ public class ShiroConfig {
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         // 使用自定义比较器
-        HashedCredentialsMatcher customMatcher = new CustomMatcher();
+        HashedCredentialsMatcher jwtMatcher = new JwtMatcher();
         // 设置散列算法
-        customMatcher.setHashAlgorithmName("MD5");
+        jwtMatcher.setHashAlgorithmName("MD5");
         // 散列次数，进行多次散列算法
-        customMatcher.setHashIterations(2);
-        return customMatcher;
-    }
-
-    /**
-     * 配置redisManager
-     * @return
-     */
-    public RedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(redisHost);
-        redisManager.setPort(redisPort);
-        LOGGER.info("redisHost: {}, redisPort: ", redisHost, redisPort);
-        return redisManager;
+        jwtMatcher.setHashIterations(2);
+        return jwtMatcher;
     }
 
     /**
@@ -227,65 +169,42 @@ public class ShiroConfig {
         return redisCacheManager;
     }
 
+    /**
+     * 下面的代码是添加注解支持
+     */
     @Bean
-    public SecurityManager securityManager() {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        // 强制使用cglib，防止重复代理和可能引起代理出错的问题，https://zhuanlan.zhihu.com/p/29161098
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
 
-        // 使用自定义cacheManager
-        securityManager.setCacheManager(redisCacheManager());
-        // 设置realm(推荐放到最后，不然某些情况不会生效)
-        // 1.Authenticator
-        securityManager.setAuthenticator(authenticator());
+    @Bean
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
 
-        // 2.Realm
-        List<Realm> realms = new ArrayList<>(16);
-        realms.add(jwtRealm());
-//        realms.add(shiroRealm());
-        securityManager.setRealms(realms);
-        // 3.关闭shiro自带的session
-        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
-        subjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator());
-        securityManager.setSubjectDAO(subjectDAO);
-
-        return securityManager;
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 配置redisManager
+     * @return
+     */
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost);
+        redisManager.setPort(redisPort);
+        LOGGER.info("redisHost: {}, redisPort: ", redisHost, redisPort);
+        return redisManager;
+    }
 
 }

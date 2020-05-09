@@ -1,6 +1,7 @@
 package com.tech.uc.service;
 
 import com.github.pagehelper.PageInfo;
+import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.User;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -84,6 +85,20 @@ public interface UserService extends IService<User> {
      */
     Map<String, Object> findByUsernameAndPassword(String username, String password);
 
+    /**
+     * 根据当前页和页数获取用户列表(分页)
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     PageInfo<User> findAllUserByPage(int pageNum, int pageSize);
+
+    /**
+     * 根据token获取redis缓存中的user.munus
+     * @param token
+     * @return
+     */
+    List<Resource> getMenus(String token);
+
 
 }

@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
+
 /**
  * @author zhuyz
  * @date 2020/4/1 0001 23:24
@@ -41,6 +43,9 @@ public class JwtRealm extends AuthorizingRealm {
     public boolean supports(AuthenticationToken token) {
         return token instanceof JwtToken;
     }
+
+
+
 
     /**
      * 授权,进行权限校验的时候回调
@@ -70,8 +75,12 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("登录认证begin----doGetAuthenticationInfo");
         String token = (String)authenticationToken.getPrincipal();
+        String userId = JwtUtils.getUserId(token);
         String username = JwtUtils.getUsername(token);
-        User user = userService.findByUsername(username);
+        User user = (User)redisClient.get(PREFIX_USER_INFO + userId);
+        if (user == null) {
+            user = userService.findByUsername(username);
+        }
         if (user == null) {
             throw new UserNotFoundException("用户不存在");
         }
@@ -79,9 +88,8 @@ public class JwtRealm extends AuthorizingRealm {
         if (user.getStatus() == 0) {
             throw new LockedAccountException();
         }
-        UserContextUtil.setCurrentMenus(user.getMenus());
         System.out.println("登录认证end----doGetAuthenticationInfo");
-        return new SimpleAuthenticationInfo(token, token, getName());
+        return new SimpleAuthenticationInfo(user, token, getName());
     }
 
 

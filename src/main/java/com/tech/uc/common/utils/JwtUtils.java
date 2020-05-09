@@ -61,16 +61,31 @@ public class JwtUtils {
     }
 
     /**
+     * 获得token中的信息无需secret解密也能获得
+     * @return token中包含的用户ID
+     */
+    public static String getUserId(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("id").asString();
+        } catch (JWTDecodeException e) {
+            log.error("error：{}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 生成签名,5min(分钟)后过期
      * @param username 用户名
      * @param secret   用户的密码
      * @return 加密的token
      */
-    public static String sign(String username, String secret) {
+    public static String sign(String id, String username, String secret) {
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // 附带username信息
         return JWT.create()
+                .withClaim("id", id)
                 .withClaim("username", username)
                 .withExpiresAt(date)
                 .sign(algorithm);

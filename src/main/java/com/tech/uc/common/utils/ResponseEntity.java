@@ -37,27 +37,17 @@ public class ResponseEntity<T> implements Serializable {
     public static <T> ResponseEntity<T> buildSuccess() {
         return new ResponseEntity<>(OK);
     }
+
     public static <T> ResponseEntity<T> buildSuccess(T data) {
         return new ResponseEntity<>(data, OK);
-    }
-    public static <T> ResponseEntity<T> buildSuccess(String msg) {
-        return new ResponseEntity<>(null, OK, msg);
     }
 
     public static <T> ResponseEntity<T> buildSuccess(T data, String msg) {
         return new ResponseEntity<>(data, OK, msg);
     }
 
-    public static ResponseEntity loginError(String msg) {
-        return new ResponseEntity<>(null, LOGIN_ERROR, msg);
-    }
-
-    public static <T> ResponseEntity<T> loginError(T data, String msg) {
-        return new ResponseEntity<>(data, LOGIN_ERROR, msg);
-    }
-
-    public static <T> ResponseEntity<T> loginError(T data) {
-        return new ResponseEntity<>(data, LOGIN_ERROR);
+    public static <T> ResponseEntity<T> buildCustom(int code) {
+        return new ResponseEntity<>(code);
     }
 
     public static <T> ResponseEntity<T> buildCustom(T data, int code) {

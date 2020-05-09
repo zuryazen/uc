@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
+import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
 
 /**
@@ -51,7 +52,7 @@ public class UserController {
             @PathVariable("pageNum") Integer pageNum,
             @PathVariable("pageSize") Integer pageSize, HttpServletRequest request) {
         PageInfo<User> userPageInfos = userService.findAllUserByPage(pageNum, pageSize);
-        return ResponseEntity.buildSuccess(userPageInfos, "query ok");
+        return ResponseEntity.buildSuccess(userPageInfos);
     }
 
     @GetMapping("/findUser/{id}")
@@ -60,7 +61,7 @@ public class UserController {
         if (userById != null) {
             return ResponseEntity.buildSuccess(userById);
         } else {
-            return ResponseEntity.buildCustom("user not found", 604);
+            return ResponseEntity.buildCustom(USER_NOT_FOUND);
         }
     }
 
@@ -74,9 +75,9 @@ public class UserController {
         boolean state = userService.deleteById(id);
         if (state) {
             Integer pageTotal = userService.selectCount(new EntityWrapper<>());
-            return ResponseEntity.buildSuccess(pageTotal, "delete ok");
+            return ResponseEntity.buildSuccess(pageTotal);
         } else {
-            return ResponseEntity.buildCustom("delete error", DELETE_ERROR);
+            return ResponseEntity.buildCustom(DELETE_ERROR);
         }
     }
 
@@ -88,8 +89,8 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity updateUserById(@RequestBody User user) {
         boolean b = userService.updateById(user);
-        return b ? ResponseEntity.buildSuccess(user, "update ok")
-                : ResponseEntity.buildCustom(user, UPDATE_ERROR, "update error");
+        return b ? ResponseEntity.buildSuccess(user)
+                : ResponseEntity.buildCustom(user, UPDATE_ERROR);
     }
 
     /**
@@ -102,9 +103,7 @@ public class UserController {
     public ResponseEntity updateUserOpenById(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
         User user = userService.selectById(id);
         user.setStatus(status);
-        boolean b = userService.updateById(user);
-        return b ? ResponseEntity.buildSuccess("update ok")
-                : ResponseEntity.buildCustom("update error", UPDATE_ERROR);
+        return userService.updateById(user) ? ResponseEntity.buildSuccess() : ResponseEntity.buildCustom(UPDATE_ERROR);
     }
 
 
@@ -116,9 +115,7 @@ public class UserController {
     @PostMapping("/curMenus")
     public ResponseEntity getCurrentUserResourcesTree(HttpServletRequest request) {
         String token = request.getHeader(AUTHORIZATION);
-        String username = JwtUtils.getUsername(token);
-        User user = (User)redisClient.get(username);
-        List<Resource> menus = user.getMenus();
+        List<Resource> menus = userService.getMenus(token);
         return menus == null && menus.size() > 0 ?
                 ResponseEntity.buildCustom("用户为空", NOT_FOUND) : ResponseEntity.buildSuccess(menus);
     }

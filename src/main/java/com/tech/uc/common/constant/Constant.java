@@ -30,8 +30,8 @@ public class Constant {
         public static final Integer USER_INVALID = 601;
         // 未登录
         public static final Integer NO_LOGIN = 602;
-        // session失效
-        public static final Integer SESSION_INVALID = 603;
+        // token失效
+        public static final Integer TOKEN_INVALID = 603;
         // 更新失败
         public static final Integer UPDATE_ERROR = 604;
         // 刪除失败
@@ -44,13 +44,19 @@ public class Constant {
         public static final Integer LOGIN_ERR_TOO_LONG = 608;
         // 账号被锁
         public static final Integer USER_LOCK = 609;
+        // 退出登录失败
+        public static final Integer LOGOUT_ERROR = 610;
 
     }
 
     public static class Auth {
         public static final String AUTHORIZATION = "Authorization";
-        public static final String PREFIX_USER_TOKEN = "ut";
-        public static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
+
+        public static final String PREFIX_USER_TOKEN = "userToken:";
+
+        public static final String PREFIX_USER_INFO = "userInfo:";
+
+
     }
 
 
