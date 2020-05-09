@@ -6244,3 +6244,5 @@ java.sql.SQLException: 无效的列类型: 1111
 2020-05-09 18:41:00.479  INFO 11048 --- [http-nio-8080-exec-5] com.tech.uc.conf.filter.JwtFilter        : JwtFilter-->>>executeLogin-Method:init()
 2020-05-09 18:41:00.481  INFO 11048 --- [http-nio-8080-exec-5] com.tech.uc.conf.JwtMatcher              : Begin to doCredentialsMatch
 2020-05-09 18:41:00.481  INFO 11048 --- [http-nio-8080-exec-5] com.tech.uc.conf.JwtMatcher              : doCredentialsMatch result: true
+2020-05-09 18:58:58.251  INFO 11048 --- [Thread-17] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-05-09 18:58:58.257  INFO 11048 --- [Thread-17] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
