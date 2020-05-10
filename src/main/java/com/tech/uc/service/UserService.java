@@ -36,9 +36,9 @@ public interface UserService extends IService<User> {
      *   删除用户角色关联关系
      *   删除用户信息
      *
-     * @param user
+     * @param id
      */
-    void deleteUser(User user);
+    void deleteUserById(String id);
 
     /**
      * 根据用户名（登录名）获取用户信息（包含关联组织，角色，权限）

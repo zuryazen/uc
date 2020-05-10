@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,24 +87,31 @@ public class User extends Model<User> {
     private String remarks;
 
     // 用户所属组织
+    @TableField(exist = false)
     private List<Org> orgList;
 
     // 用户所属角色
+    @TableField(exist = false)
     private List<Role> roleList;
 
     // 用户关联资源列表
+    @TableField(exist = false)
     private List<Resource> resourceList;
 
     // 用户区属
+    @TableField(exist = false)
     private String district;
 
     // 用户所属菜单（已被格式化为树形结构）
+    @TableField(exist = false)
     private List<Resource> menus;
 
     // 用户附带的参数（扩展用）
-    private Map<String, Object> params;
+    @TableField(exist = false)
+    private Map<String, Object> params = new HashMap<>();
 
     // 存储token
+    @TableField(exist = false)
     private String token;
 
     @TableField("CREATE_TIME")

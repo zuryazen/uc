@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -25,11 +26,28 @@ import static com.tech.uc.common.constant.Constant.StatusCode.*;
 @Slf4j
 public class BaseExceptionHandler {
 
+    /**
+     * 权限异常捕获
+     * @param request
+     * @param response
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = AuthorizationException.class)
     public ResponseEntity errorAuthorizationException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        return ResponseEntity.buildCustom("no auth", TOKEN_INVALID);
+        if (e instanceof UnauthorizedException) {
+            return ResponseEntity.buildCustom("no permission", NO_PERMISSION);
+        }
+        return ResponseEntity.buildCustom(null, UNKNOWN_ERROR, "未知错误");
     }
 
+    /**
+     * 用户主体异常捕获
+     * @param request
+     * @param response
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = AccountException.class)
     public ResponseEntity errorAccountException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         if (e instanceof UserNotFoundException) {

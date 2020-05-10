@@ -46,6 +46,8 @@ public class Constant {
         public static final Integer USER_LOCK = 609;
         // 退出登录失败
         public static final Integer LOGOUT_ERROR = 610;
+        // 无权访问
+        public static final Integer NO_PERMISSION = 611;
 
     }
 
@@ -55,6 +57,8 @@ public class Constant {
         public static final String PREFIX_USER_TOKEN = "userToken:";
 
         public static final String PREFIX_USER_INFO = "userInfo:";
+
+        public static final String AUTHORIZATIONINFO = "authorizationinfo";
 
 
     }

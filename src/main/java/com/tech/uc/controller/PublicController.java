@@ -5,6 +5,8 @@ import com.tech.uc.common.exception.PwdErrorManyException;
 import com.tech.uc.common.exception.UserNotFoundException;
 import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.UserContextUtil;
+import com.tech.uc.entity.Resource;
+import com.tech.uc.entity.Role;
 import com.tech.uc.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.LockedAccountException;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.tech.uc.common.constant.Constant.Auth.*;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
@@ -75,6 +79,7 @@ public class PublicController {
         // 生成token
         String token = JwtUtils.sign(userId, username, password);
         user.setToken(token);
+        setRoleAndPermit(user);
         // 删除重复登录的用户信息
         redisClient.del(PREFIX_USER_INFO + userId);
         // 缓存新的用户信息
@@ -132,5 +137,22 @@ public class PublicController {
         redisClient.del(PREFIX_USER_INFO + userId);
         return ResponseEntity.buildSuccess();
     }
+
+
+    /**
+     * 设置用户角色权限
+     * @param user
+     */
+    private void setRoleAndPermit(User user) {
+        Set<String> roleSet = user.getRoleList().stream().map(Role::getCode).collect(Collectors.toSet());
+        Set<String> permitSet = user.getResourceList().stream()
+                .map(Resource::getPermission)
+                .filter(w -> w != null && !"".equals(w))
+                .collect(Collectors.toSet());
+        Map<String, Object> params = user.getParams();
+        params.put("roleSet", roleSet);
+        params.put("permitSet", permitSet);
+    }
+
 
 }

@@ -8,22 +8,18 @@ import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATIONINFO;
 import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
 
 /**
@@ -31,7 +27,9 @@ import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
  * @date 2020/4/1 0001 23:24
  * @description 自定义realm
  */
+@Slf4j
 public class JwtRealm extends AuthorizingRealm {
+
 
     @Autowired
     private UserService userService;
@@ -44,8 +42,25 @@ public class JwtRealm extends AuthorizingRealm {
         return token instanceof JwtToken;
     }
 
-
-
+    /**
+     * 重写授权获取方法
+     * @param principals
+     * @return
+     */
+    @Override
+    protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+        if (principals == null) {
+            return null;
+        }
+        AuthorizationInfo info = null;
+        User user = (User) principals.fromRealm(getName()).stream().findFirst().get();
+        info = (AuthorizationInfo) redisClient.get(AUTHORIZATIONINFO + user.getId());
+        if (info == null) {
+            // Call template method if the info was not found in a cache
+            info = doGetAuthorizationInfo(principals);
+        }
+        return info;
+    }
 
     /**
      * 授权,进行权限校验的时候回调
@@ -62,6 +77,7 @@ public class JwtRealm extends AuthorizingRealm {
                 .map(Resource:: getPermission)
                 .filter(w -> w != null && !"".equals(w))
                 .collect(Collectors.toSet()));
+        redisClient.set(AUTHORIZATIONINFO + user.getId(), authorizationInfo, JwtUtils.EXPIRE_TIME / 1000);
         return authorizationInfo;
     }
 

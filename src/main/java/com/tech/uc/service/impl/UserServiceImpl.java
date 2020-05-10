@@ -57,7 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RedisClient redisClient;
 
     @CacheEvict(cacheNames = "sys", allEntries = true)
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveUser(User user) {
         if (user == null) {
@@ -86,8 +85,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void deleteUser(User user) {
-
+    public void deleteUserById(String id) {
+        User user = userMapper.selectById(id);
+        if (user != null) {
+            // 删除用户组织关系
+            userMapper.deleteUserOrgList(id);
+            // 删除用户权限关系
+            userMapper.deleteUserRoleList(id);
+            // 删除用户
+            userMapper.deleteById(id);
+        }
     }
 
 
