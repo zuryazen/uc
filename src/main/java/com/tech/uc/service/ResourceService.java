@@ -1,7 +1,9 @@
 package com.tech.uc.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tech.uc.entity.Resource;
 import com.baomidou.mybatisplus.service.IService;
+import com.tech.uc.entity.User;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,8 @@ public interface ResourceService extends IService<Resource> {
     List<Resource> findByRoleId(String roleId);
 
     List<Resource> findAll();
+
+
 
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = "sys",allEntries = true)

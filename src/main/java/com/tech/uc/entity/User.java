@@ -135,6 +135,21 @@ public class User extends Model<User> {
     @TableField("DELETE_FLAG")
     private Integer deleteFlag;
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.status = 1;
+        this.address = "NA";
+        this.birthday = new Date();
+        this.email = "NA";
+        this.fullName = "NA";
+        this.icon = "NA";
+        this.phone = "NA";
+        this.sex = 1;
+        this.sort = -1.0;
+    }
+
+
     @Override
     protected Serializable pkVal() {
         return this.id;

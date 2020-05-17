@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author zhuyz
@@ -17,8 +18,10 @@ public class UserVO implements Serializable {
 
     private String username;
     private String password;
-
-
+    private Date birthdate;
+    private String email;
+    private Integer sex;
+    private String phone;
 
 
 }

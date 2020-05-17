@@ -51,9 +51,11 @@ public class Role extends Model<Role> {
     private String remarks;
 
     // 角色对应用户集合
+    @TableField(exist = false)
     private List<User> userList;
 
     // 角色对应资源集合
+    @TableField(exist = false)
     private List<Resource> resourceList;
 
 

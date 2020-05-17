@@ -1,5 +1,6 @@
 package com.tech.uc.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
 import com.baomidou.mybatisplus.service.IService;
@@ -28,7 +29,7 @@ public interface RoleService extends IService<Role> {
      *        <li>角色资源关联关系</li>
      *    </ul>
      */
-    void saveRoleResources(String roleId, List<Resource> resources);
+    void saveRoleResources(String roleId, List<String> resourceIds);
 
 
     /**
@@ -40,7 +41,7 @@ public interface RoleService extends IService<Role> {
      *    </ul>
      *
      */
-    void saveRoleUsers(String roleId, List<User> users);
+    void saveRoleUsers(String roleId, List<String> userIds);
 
     /**
      * 根据组织Id获取该组织下角色列表
@@ -73,6 +74,7 @@ public interface RoleService extends IService<Role> {
 
     List<Resource> findByRoleId(String roleId);
 
-    List<Resource> findAll();
+    List<Role> findAll();
 
+    PageInfo<Role> findAllRoleByPage(int pageNum, int pageSize);
 }

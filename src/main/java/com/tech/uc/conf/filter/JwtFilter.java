@@ -35,6 +35,7 @@ import static com.tech.uc.common.constant.Constant.StatusCode.TOKEN_INVALID;
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     private static final String loginUrl = "/pub/login";
+    private static final String registryUri = "/api/pub/registry";
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -54,7 +55,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         log.info("JwtFilter-->>>isAccessAllowed-Method:init()");
         HttpServletRequest req = (HttpServletRequest) request;
-        if(antPathMatcher.match(getLoginUrl(), req.getRequestURI())){
+        if(antPathMatcher.match(getLoginUrl(), req.getRequestURI()) || antPathMatcher.match(registryUri, req.getRequestURI())){
             return true;
         }
         try {

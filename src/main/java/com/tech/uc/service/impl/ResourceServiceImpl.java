@@ -1,6 +1,9 @@
 package com.tech.uc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tech.uc.entity.Resource;
+import com.tech.uc.entity.User;
 import com.tech.uc.mapper.ResourceMapper;
 import com.tech.uc.service.ResourceService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -13,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.tech.uc.service.impl.UserServiceImpl.list2tree;
 
 /**
  * <p>
@@ -38,7 +43,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     @Override
     public List<Resource> findAll() {
         List<Resource> resourceList = resourceMapper.findAll();
-        return resourceList;
+        return list2tree(resourceList);
     }
 
     @Transactional(rollbackFor = Exception.class)

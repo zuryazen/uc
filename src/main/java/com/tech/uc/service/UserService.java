@@ -19,16 +19,37 @@ import java.util.Map;
 public interface UserService extends IService<User> {
 
     /**
-     * 保存用户（新增，修改，由主键是否为空决定，为空表示新增，否则修改）
+     * 新增用户（新增，修改，由主键是否为空决定，为空表示新增，否则修改）
      *
      *  保存以下信息：
      *      用户基本信息
-     *      用户组织关联关系
-     *      用户角色关联关系
+     *      用户角色关联关系(默认的普通用户角色)
      *
      * @param user
      */
-    void saveUser(User user);
+    void addUser(User user);
+
+    /**
+     * 更新用户（新增，修改，由主键是否为空决定，为空表示新增，否则修改）
+     *
+     *  保存以下信息：
+     *      用户基本信息
+     *
+     * @param user
+     */
+    void updateUser(User user);
+
+    /**
+     * 更新用户角色（修改，由主键是否为空决定，为空表示新增，否则修改）
+     *
+     *  保存以下信息：
+     *      用户基本信息
+     *      用户角色关联关系
+     *
+     * @param userId
+     * @param roleIds
+     */
+    void updateUserRole(String userId, List<String> roleIds);
 
     /**
      * 删除用户

@@ -26,7 +26,7 @@ import static com.tech.uc.common.constant.Constant.Auth.PREFIX_USER_INFO;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author zhuyz
@@ -45,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private OrgService orgService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private ServerService serverService;
 
     @Autowired
@@ -58,30 +61,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @CacheEvict(cacheNames = "sys", allEntries = true)
     @Override
-    public void saveUser(User user) {
-        if (user == null) {
-            throw new ServiceException("user cannot be null");
-        }
+    public void addUser(User user) {
         String userId = user.getId();
         if (userId == null) {
             // 执行insert
             super.insert(user);
-        } else {
-            // 执行update
-            super.update(user, new EntityWrapper<User>().where("id={0}", userId));
-            // 删除用户组织关系
-            userMapper.deleteUserOrgList(userId);
-            // 删除用户权限关系
-            userMapper.deleteUserRoleList(userId);
+            user = userMapper.findByUsername(user.getUsername());
+            // 默认新增用户的角色为普通用户
+            List<Role> roleList = roleMapper.selectList(new EntityWrapper<Role>().eq("code", 200));
+            userMapper.insertUserRoleList(user.getId(), roleList);
         }
-        // 保存用户组织关系
-        if (user.getOrgList().size() > 0) {
-            userMapper.insertUserOrgList(userId, user.getOrgList());
-        }
-        // 保存用户角色关系
-        if (user.getRoleList().size() > 0) {
-            userMapper.insertUserRoleList(userId, user.getRoleList());
-        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void updateUserRole(String userId, List<String> roleIds) {
+        User user = userMapper.selectById(userId);
+        List<Role> roleList = roleIds.stream().map(id -> roleMapper.selectById(id)).collect(Collectors.toList());
+        // 执行update
+        super.update(user, new EntityWrapper<User>().where("id={0}", userId));
+        // 删除用户权限关系
+        userMapper.deleteUserRoleList(userId);
+        // 重新赋值用户权限关系
+        userMapper.insertUserRoleList(userId, roleList);
     }
 
     @Override
@@ -102,17 +108,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User findByUsername(String username) {
         User user = userMapper.findByUsername(username);
         HashSet<Resource> resources = new HashSet<>();
+        if (user != null) {
+            for (Role role : user.getRoleList()) {
+                resources.addAll(role.getResourceList());
+            }
+            user.setResourceList(new ArrayList<>(resources));
 
-        for (Role role : user.getRoleList()) {
-            resources.addAll(role.getResourceList());
+            List<Resource> menus = resources.parallelStream()
+                    .filter(o -> o.getEnabled() == 1 && "1".equals(o.getType()))
+                    .sorted((o1, o2) -> o1.getSort() <= o2.getSort() ? (o1.getSort() == o2.getSort() ? 0 : -1) : 1)
+                    .collect(Collectors.toList());
+            user.setMenus(list2tree(menus));
         }
-        user.setResourceList(new ArrayList<>(resources));
-
-        List<Resource> menus = resources.parallelStream()
-                .filter(o -> o.getEnabled() == 1 && "1".equals(o.getType()))
-                .sorted((o1, o2) -> o1.getSort() <= o2.getSort() ? (o1.getSort() == o2.getSort() ? 0 : -1) : 1)
-                .collect(Collectors.toList());
-        user.setMenus(list2tree(menus));
         return user;
     }
 
@@ -150,7 +157,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userPageInfo;
     }
 
-    public static List<Resource> list2tree(List<Resource> list){
+    /**
+     * 将list转换为树形结构
+     *
+     * @param list
+     * @return
+     */
+    public static List<Resource> list2tree(List<Resource> list) {
         Map<String, Resource> map = new HashMap<>();
         //ID 为 key 存储到map 中
         for (Resource demo : list) {
@@ -160,9 +173,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         for (Resource resource : list) {
             //子集ID返回对象，有则添加。
             Resource pResource = map.get(resource.getPid());
-            if(pResource != null){
+            if (pResource != null) {
                 pResource.getChildrens().add(resource);
-            }else {
+            } else {
                 resources.add(resource);
             }
         }
@@ -172,7 +185,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<Resource> getMenus(String token) {
         String userId = JwtUtils.getUserId(token);
-        User user = (User)redisClient.get(PREFIX_USER_INFO + userId);
+        User user = (User) redisClient.get(PREFIX_USER_INFO + userId);
         List<Resource> menus = user.getMenus();
         return user.getMenus();
     }

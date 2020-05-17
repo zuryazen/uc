@@ -70,9 +70,7 @@ public class PublicController {
         if (user.getStatus() == 0) {
             throw new LockedAccountException();
         }
-        String hashName = "MD5";
-        SimpleHash hashPwd = new SimpleHash(hashName, password, null, 2);
-        if (!hashPwd.toHex().equals(user.getPassword())) {
+        if (!getMD5SimpleHash(password).toHex().equals(user.getPassword())) {
             throw new PwdErrorException();
         }
         String userId = user.getId();
@@ -136,6 +134,23 @@ public class PublicController {
         String userId = JwtUtils.getUserId(token);
         redisClient.del(PREFIX_USER_INFO + userId);
         return ResponseEntity.buildSuccess();
+    }
+
+    @PostMapping("/registry")
+    public ResponseEntity registry(@RequestBody UserVO userVO) {
+        User user = userService.findByUsername(userVO.getUsername());
+        if (user == null) {
+            user = new User(userVO.getUsername(), getMD5SimpleHash(userVO.getPassword()).toHex());
+            userService.addUser(user);
+            return ResponseEntity.buildSuccess();
+        } else {
+            return ResponseEntity.buildCustom(null, -1, "该用户已经存在");
+        }
+    }
+
+    public static SimpleHash getMD5SimpleHash(String password) {
+        String hashName = "MD5";
+        return new SimpleHash(hashName, password, null, 2);
     }
 
 

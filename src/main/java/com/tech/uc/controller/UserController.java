@@ -23,6 +23,7 @@ import java.util.Map;
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATIONINFO;
 import static com.tech.uc.common.constant.Constant.StatusCode.*;
+import static com.tech.uc.controller.PublicController.getMD5SimpleHash;
 
 /**
  * <p>
@@ -64,9 +65,10 @@ public class UserController {
     @RequiresPermissions("user:view")
     @GetMapping("/findUser/{id}")
     public ResponseEntity findUserById(@PathVariable("id") String id) {
-        User userById = userService.selectById(id);
-        if (userById != null) {
-            return ResponseEntity.buildSuccess(userById);
+        User user = userService.selectById(id);
+        user.setPassword("");
+        if (user != null) {
+            return ResponseEntity.buildSuccess(user);
         } else {
             return ResponseEntity.buildCustom(USER_NOT_FOUND);
         }
@@ -85,6 +87,7 @@ public class UserController {
         Integer pageTotal = userService.selectCount(new EntityWrapper<>());
         return ResponseEntity.buildSuccess(pageTotal);
     }
+
 
     /**
      * 根据用户id更新是否启用开关
