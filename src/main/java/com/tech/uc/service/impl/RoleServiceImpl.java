@@ -75,7 +75,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Cacheable(cacheNames = "sys", keyGenerator = "keyGenerator")
     @Override
     public List<Role> findListByUserId(String userId) {
-        return null;
+        return roleMapper.findListByUserId(userId);
     }
 
     @Cacheable(cacheNames = "sys", keyGenerator = "keyGenerator")

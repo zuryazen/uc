@@ -7,18 +7,24 @@ import com.tech.uc.common.utils.JwtUtils;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.common.utils.ResponseEntity;
 import com.tech.uc.entity.Resource;
+import com.tech.uc.entity.Role;
 import com.tech.uc.entity.User;
 import com.tech.uc.service.RoleService;
 import com.tech.uc.service.UserService;
+import com.tech.uc.vo.UserIdRolesVO;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATION;
 import static com.tech.uc.common.constant.Constant.Auth.AUTHORIZATIONINFO;
@@ -74,6 +80,21 @@ public class UserController {
         }
     }
 
+    @RequiresRoles(value = {"101", "100", "000"}, logical = Logical.OR)
+    @GetMapping("/findRolesByUserId/{id}/{pageNum}/{pageSize}")
+    public ResponseEntity findRolesByUserId(
+            @PathVariable("id") String id,
+            @PathVariable("pageNum") Integer pageNum,
+            @PathVariable("pageSize") Integer pageSize) {
+        PageInfo<Role> allRoleByPage = roleService.findAllRoleByPage(pageNum, pageSize);
+        List<Role> curUserRoles = roleService.findListByUserId(id);
+        Map<String, Object> data = new HashMap<>();
+        data.put("allRoles", allRoleByPage);
+        data.put("curUserRoles", curUserRoles);
+        return ResponseEntity.buildSuccess(data);
+    }
+
+
     /**
      * 根据用户id删除用户
      *
@@ -110,6 +131,7 @@ public class UserController {
      * @param status
      * @return
      */
+    @RequiresPermissions("user:update")
     @PutMapping("/updateStatus/{id}/{status}")
     public ResponseEntity updateUserOpenById(@PathVariable("id") String id, @PathVariable("status") Integer status) {
         User user = userService.selectById(id);
@@ -117,19 +139,14 @@ public class UserController {
         return userService.updateById(user) ? ResponseEntity.buildSuccess() : ResponseEntity.buildCustom(UPDATE_ERROR);
     }
 
-
-    /**
-     * 获取当前用户所拥有的资源列表
-     *
-     * @return
-     * @date 2018/12/07
-     */
-    @PostMapping("/curMenus")
-    public ResponseEntity getCurrentUserResourcesTree(HttpServletRequest request) {
-        String token = request.getHeader(AUTHORIZATION);
-        List<Resource> menus = userService.getMenus(token);
-        return menus == null && menus.size() > 0 ?
-                ResponseEntity.buildCustom("用户为空", NOT_FOUND) : ResponseEntity.buildSuccess(menus);
+    @RequiresRoles(value = {"101", "100", "000"}, logical = Logical.OR)
+    @PutMapping("updateUserRoles")
+    public ResponseEntity updateUserRoles(@RequestBody UserIdRolesVO userIdRolesVO) {
+        String userId = userIdRolesVO.getUserId();
+        List<Role> roleList = userIdRolesVO.getRoleList();
+        List<String> roleIds = roleList.stream().map(Role::getId).collect(Collectors.toList());
+        userService.updateUserRole(userId, roleIds);
+        return ResponseEntity.buildSuccess();
     }
 
 

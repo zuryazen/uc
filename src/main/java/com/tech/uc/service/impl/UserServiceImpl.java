@@ -84,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<Role> roleList = roleIds.stream().map(id -> roleMapper.selectById(id)).collect(Collectors.toList());
         // 执行update
         super.update(user, new EntityWrapper<User>().where("id={0}", userId));
-        // 删除用户权限关系
+        // 删除用户角色关系
         userMapper.deleteUserRoleList(userId);
         // 重新赋值用户权限关系
         userMapper.insertUserRoleList(userId, roleList);

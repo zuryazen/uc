@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -147,6 +148,21 @@ public class PublicController {
             return ResponseEntity.buildCustom(null, -1, "该用户已经存在");
         }
     }
+
+    /**
+     * 获取当前用户所拥有的资源列表
+     *
+     * @return
+     * @date 2018/12/07
+     */
+    @PostMapping("/curMenus")
+    public ResponseEntity getCurrentUserResourcesTree(HttpServletRequest request) {
+        String token = request.getHeader(AUTHORIZATION);
+        List<Resource> menus = userService.getMenus(token);
+        return menus == null && menus.size() > 0 ?
+                ResponseEntity.buildCustom("用户为空", NOT_FOUND) : ResponseEntity.buildSuccess(menus);
+    }
+
 
     public static SimpleHash getMD5SimpleHash(String password) {
         String hashName = "MD5";

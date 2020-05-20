@@ -65,6 +65,8 @@ public interface RoleService extends IService<Role> {
      */
     List<Role> findListByOrgIds(List<String> orgIds);
 
+
+
     /**
      * 根据条件获取角色列表
      * @param params
