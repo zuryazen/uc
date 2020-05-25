@@ -30,6 +30,13 @@ public interface UserService extends IService<User> {
     void addUser(User user);
 
     /**
+     * 导入用户excel，多用户导入
+     *
+     * @param users
+     */
+    void addUsers(List<User> users);
+
+    /**
      * 更新用户（新增，修改，由主键是否为空决定，为空表示新增，否则修改）
      *
      *  保存以下信息：

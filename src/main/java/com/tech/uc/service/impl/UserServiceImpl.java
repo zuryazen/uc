@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tech.uc.common.exception.ServiceException;
 import com.tech.uc.common.utils.JwtUtils;
+import com.tech.uc.common.utils.MD5Utils;
 import com.tech.uc.common.utils.RedisClient;
 import com.tech.uc.entity.Resource;
 import com.tech.uc.entity.Role;
@@ -71,6 +72,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<Role> roleList = roleMapper.selectList(new EntityWrapper<Role>().eq("code", 200));
             userMapper.insertUserRoleList(user.getId(), roleList);
         }
+    }
+
+    @Override
+    public void addUsers(List<User> users) {
+        List<User> userList = users.stream().map(obj -> {
+            obj.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+            obj.setPassword(MD5Utils.getPwd(obj.getPassword(), null, 2));
+            return obj;
+        }).collect(Collectors.toList());
+        userMapper.insertUsersByExcel(userList);
     }
 
     @Override

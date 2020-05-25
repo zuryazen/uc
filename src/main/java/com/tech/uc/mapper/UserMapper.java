@@ -49,6 +49,14 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> findByRoleId(String roleId);
 
     /**
+     * 根据组织ID和角色code获取用户列表
+     * @param orgId
+     * @param roleCode
+     * @return
+     */
+    List<User> findByOrgIdAndRoleCode(@Param("orgId") String orgId, @Param("roleCode") String roleCode);
+
+    /**
      * 删除组织用户关系列表
      * @param userId 用户ID
      */
@@ -74,12 +82,9 @@ public interface UserMapper extends BaseMapper<User> {
      */
     void insertUserRoleList(@Param("userId") String userId, @Param("roleList") List<Role> roleList);
 
-
     /**
-     * 根据组织ID和角色code获取用户列表
-     * @param orgId
-     * @param roleCode
-     * @return
+     * 通过前台导入excel解析成list返回给后台，实现批量导入用户
+     * @param users
      */
-    List<User> findByOrgIdAndRoleCode(@Param("orgId") String orgId, @Param("roleCode") String roleCode);
+    void insertUsersByExcel(@Param("users") List<User> users);
 }

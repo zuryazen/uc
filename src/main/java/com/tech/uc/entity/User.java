@@ -147,6 +147,7 @@ public class User extends Model<User> {
         this.phone = "NA";
         this.sex = 1;
         this.sort = -1.0;
+        this.salt = "";
     }
 
 
